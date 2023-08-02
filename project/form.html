@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>오늘의 공연</title>
+    <!-- css -->
+    <link rel="stylesheet" href="trash/css/style.min.css" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./assets/favicon/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./assets/favicon/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="57x57" href="./assets/favicon/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="./assets/favicon/apple-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="./assets/favicon/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="./assets/favicon/apple-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="./assets/favicon/apple-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="./assets/favicon/apple-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="./assets/favicon/apple-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicon/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicon/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="./assets/favicon/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="./assets/favicon/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- animate -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/6d6ba2de03.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <!-- header -->
+    <div data-include="inc/header.html"></div>
+
+    <div class="main">
+      <!-- index -->
+      <div class="index">
+        <ul>
+          <li><i class="i1 fa-solid fa-circle choose"></i></li>
+          <li><i class="i2 fa-solid fa-circle"></i></li>
+          <li><i class="i3 fa-solid fa-circle"></i></li>
+        </ul>
+      </div>
+      <div id="wrap">
+        <!-- form1 -->
+        <div class="container">
+          <h2>언제 <br />공연을 찾으시나요?</h2>
+          <div class="btn">
+            <input type="date" data-date-inline-picker="true" id="calender" />
+            <a href="#" class="check hvr-grow" id="dateCheck"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+        </div>
+
+        <!-- form2 -->
+        <div class="container">
+          <h2>어디서 <br />공연을 찾으시나요?</h2>
+          <div class="btn">
+            <button>
+              <a href="#" id="userLoc"><i class="fa-solid fa-location-crosshairs"></i> 현재 위치 찾기</a>
+            </button>
+            <a href="#" class="ulCheck check hvr-grow"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+          <div class="btn">
+            <button>
+              <a href="#" id="chooseLoc"><i class="fa-solid fa-location-dot"></i> 위치 선택 | 지도를 클릭하세요</a>
+            </button>
+            <a href="#" class="clCheck check hvr-grow"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+          <div class="map_wrap">
+            <div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden"></div>
+
+            <div class="map_text"></div>
+          </div>
+        </div>
+
+        <!-- form3 -->
+        <div class="container">
+          <h2>어떤 <br />장르를 찾으시나요? (복수선택 가능)</h2>
+          <div class="btn btn1" data-genre="무용">
+            <p>무용</p>
+            <a href="#" class="expCheck check hvr-grow"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+          <div class="btn btn1" data-genre="뮤지컬">
+            <p>뮤지컬</p>
+            <a href="#" class="expCheck check hvr-grow"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+          <div class="btn btn1" data-genre="뮤지컬">
+            <p>연극</p>
+            <a href="#" class="expCheck check hvr-grow"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+
+          <div class="btn btn1" data-genre="오페라">
+            <p>오페라</p>
+            <a href="#" class="expCheck check hvr-grow"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+          <div class="btn btn1" data-genre="콘서트">
+            <p>콘서트</p>
+            <a href="#" class="expCheck check hvr-grow"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+          <div class="btn btn1" data-genre="클래식">
+            <p>클래식</p>
+            <a href="#" class="expCheck check hvr-grow"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+          <div class="btn btn1" data-genre="기타">
+            <p>기타</p>
+            <a href="#" class="expCheck check hvr-grow"><i class="fa-regular fa-circle-check"></i></a>
+          </div>
+          <div class="btn chooseEnd">
+            <a href="#" id="chooseEnd">선택완료</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div data-include="inc/footer.html"></div>
+
+    <!-- JavaScript 불러오기 -->
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <script src="assets/js/include.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3195742ef235b8c2f8ea8eab9072baf7&libraries=services"></script>
+    <script type="module">
+      // header logo hover animation class
+      import logoanimation from "./assets/js/logo-animation.js";
+      // header logo hover animation 실행
+      logoanimation.logoOver();
+      logoanimation.logoOut();
+    </script>
+
+    <!-- JavaScript 코드 -->
+    <script src="assets/js/form.js"></script>
+  </body>
+</html>

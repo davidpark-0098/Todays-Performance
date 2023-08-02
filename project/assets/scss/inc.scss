@@ -1,0 +1,99 @@
+@charset "utf-8";
+
+@import "./variables.scss";
+
+// header 공통 적용
+header {
+  // 크기 조정
+  width: 100%;
+  height: 70px;
+  // 배경, 선
+  background-color: white;
+  border-bottom: 1px solid $line;
+
+  #header_section {
+    max-width: 800px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    // header logo
+    #header_logo {
+      white-space: nowrap;
+
+      // main shortcut
+      a {
+        // icon
+        i {
+          font-size: 24px;
+          color: #868e96;
+
+          margin-left: -4px;
+          padding: 13px;
+          transition: all 0.3s ease;
+          
+
+          &:hover {
+            color: #2a3037;
+          }
+        }
+      }
+    }
+
+    // shortcut
+    #shortcut_nav {
+      ul {
+        // 바로가기 가로 정렬
+        display: flex;
+
+        // 바로가기 리스트
+        li {
+          // 형태, 간격, 트렌지션 설정
+          line-height: 50px;
+          margin-left: 30px;
+          box-sizing: border-box;
+          transition: all 0.3s ease;
+
+          // text
+          a {
+            display: inline-block;
+            height: 50px;
+
+            font-size: $h5;
+            font-weight: $fw_m;
+            color: #868e96;
+            transition: 0.3s;
+            white-space: nowrap;
+          }
+        }
+
+        // shortcut_nav hover
+        li:hover {
+          a {
+            color: #2a3037;
+          }
+        }
+      }
+    }
+  }
+}
+
+// footer 공통 적용
+footer {
+  width: 100%;
+  height: 25px;
+
+  background-color: $bg_footer;
+  color: rgba(255, 255, 255, 0.5);
+
+  // copyright
+  address {
+    font-size: 10px;
+    text-align: center;
+    line-height: 25px;
+  }
+}

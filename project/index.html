@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- style.css -->
+    <link rel="stylesheet" href="./assets/css/style.min.css" />
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/4c1758484e.js" crossorigin="anonymous"></script>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./assets/favicon/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./assets/favicon/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="57x57" href="./assets/favicon/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="./assets/favicon/apple-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="./assets/favicon/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="./assets/favicon/apple-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="./assets/favicon/apple-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="./assets/favicon/apple-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="./assets/favicon/apple-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicon/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicon/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="./assets/favicon/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="./assets/favicon/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- title -->
+    <title>오늘의 공연</title>
+  </head>
+
+  <body>
+    <!-- header -->
+    <div data-include="./inc/header.html"></div>
+
+    <!-- main -->
+    <main>
+      <!-- title section -->
+      <section id="main_title">
+        <!-- search icon -->
+        <i id="search" class="fa-solid fa-magnifying-glass"></i><br />
+        <b>
+          <h1 id="title" class="hvr-grow">나에게 딱 맞는 공연을 추천해 드립니다!</h1>
+        </b>
+        <h5 id="sub_title">
+          지역별, 장르별 전국의 다양한 공연을 소개합니다.<br />
+          나만의 맞춤형 공연을 찾아보세요.
+        </h5>
+      </section>
+
+      <!-- 오늘의 공연 포스터 -->
+      <section id="main_today">
+        <div id="today"></div>
+      </section>
+
+      <!-- 검색 버튼 -->
+      <section id="btn_section">
+        <ul id="btn_ul">
+          <li class="searchPageBtn shadow border_r "><a href="./form.html">나에게 딱 맞는 공연 추천 받기</a></li>
+          <li class="searchPageBtn border_r "><a href="./search-performance.html">공연 검색하기</a></li>
+          <li class="searchPageBtn border_r "><a href="./search-map.html">공연장 찾아보기</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- footer -->
+    <div data-include="./inc/footer.html"></div>
+
+    <!-- ==========SCRIPT========== -->
+    <!-- axios -->
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <!-- header footer 생성 -->
+    <script src="./assets/js/include.js"></script>
+    <!-- script -->
+    <script type="module">
+      // KOPIS 공연목록 open api json datasets
+      (async () => {
+        let json = null;
+
+        try {
+          /**/
+          // test api json
+          const response = await axios.get("http://localhost:3001/response");
+          json = response.data.body.items.item;
+          /*/
+                // api json
+                const response = await axios.get("http://api.kcisa.kr/openapi/service/rest/meta16/getkopis01", {
+                  params: {
+                    serviceKey: "b5c0289f-a465-4bd4-bb80-37b3b12a1150",
+                    numOfRows: 14,
+                    pageNo: 1,
+                  },
+                  header: {
+                    accept: "application/json",
+                  },
+                });
+                json = response.data.response.body.items.item;
+                /**/
+        } catch (e) {
+          console.error(e);
+          alert("요청을 처리하는데 실패했습니다.");
+          return;
+        }
+
+        // json에서 1페이지 1번 ~ 14번까지 포스터를 img태그로 생성
+        for (let i = 0; i < 14; i++) {
+          const img = document.createElement("img");
+          img.setAttribute("src", `${json[i].referenceIdentifier}`);
+          img.classList.add("hvr-grow");
+          document.querySelector("#today").appendChild(img);
+        }
+      })();
+    </script>
+  </body>
+</html>
