@@ -84,56 +84,53 @@ main {
   }
 
   // 검색 버튼
-  #btn_section {
+  #search_page_btn_sec {
     width: 100%;
 
-    #btn_ul {
+    #search_page_btn_ul {
       width: 100%;
-      // 세로 정렬
       display: flex;
       flex-direction: column;
       align-items: center;
 
+      // 공연 추천 페이지 이동 버튼
+      #recommendBtn {
+        width: 422px;
+        height: 50px;
+        background-color: $pc_main;
+        transition: all 0.3s ease;
+
+        a {
+          display: block;
+          width: 100%;
+          height: 100%;
+          line-height: 50px;
+          color: white;
+        }
+
+        &:hover {
+          background-color: $pc_main_hover;
+        }
+      }
+
+      // 공연, 공연장 검색 페이지 이동 버튼
       .searchPageBtn {
         width: 422px;
         height: 50px;
 
-        // 맞춤공연 검색버튼 색상 적용
-        &:first-child {
-          background-color: $pc_main;
-          transition: all 0.3s ease;
-
-          a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            color: white;
-          }
-          // 맞춤공연 검색버튼 hover
-        }
-        &:first-child:hover {
-          background-color: $pc_main_hover;
-        }
-
-        // 공연 검색버튼
         &:nth-child(2) {
           margin-top: 10px;
-        }
-
-        // 공연 검색버튼
-        &:nth-child(1 + n) {
-          a {
-            transition: all 0.3s ease;
-            color: $fc_sub;
-          }
-          a:hover {
-            color: $pc_main;
-          }
         }
 
         a {
           display: inline-block;
           line-height: 50px;
+          color: $fc_sub;
+          transition: all 0.3s ease;
+
+          &:hover {
+            color: $pc_main;
+          }
         }
       }
     }

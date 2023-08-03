@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./assets/css/search.min.css" />
+    <link rel="stylesheet" href="./assets/css/search-performance.min.css" />
 
     <!-- favicon -->
     <link rel="shortcut icon" href="./assets/favicon/favicon.ico" type="image/x-icon" />
@@ -48,7 +48,7 @@
     <!-- main -->
     <main>
       <!-- Main Title -->
-      <h1 id="search_title">공연 상세 검색</h1>
+      <h1 id="search_title">공연 검색</h1>
 
       <!-- 공연 상세 검색 양식 -->
       <form action="#" id="search_form" name="searchForm">
@@ -69,7 +69,7 @@
           </select>
 
           <!-- 지역 선택 -->
-          <select id="select_map" name="map" onchange="this.value">
+          <!-- <select id="select_map" name="map" onchange="this.value">
             <option class="mapOptions" value="" disabled selected>지역을 선택하세요.</option>
             <option class="mapOptions" value="">전국</option>
             <option class="mapOptions" value="37.5666805,126.9784147">서울</option>
@@ -89,16 +89,16 @@
             <option class="mapOptions" value="36.248647,128.664734">경북</option>
             <option class="mapOptions" value="35.259787,128.664734">경남</option>
             <option class="mapOptions" value="33.50000,126.51667">제주</option>
-          </select>
+          </select> -->
 
           <!-- 검색 타입 선택 -->
-          <select id="select_search_type" name="searchType">
+          <!-- <select id="select_search_type" name="searchType">
             <option value="titleSearchOptions">제목검색</option>
             <option value="placeSearchOptions">장소검색</option>
-          </select>
+          </select> -->
 
           <!-- 검색어 -->
-          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연제목 또는 공연장 입력" />
+          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연 제목을 입력해주세요." />
 
           <!-- 검색 버튼 -->
           <button type="submit" class="submitBtn">
