@@ -49,6 +49,11 @@
     <main>
       <!-- Main Title -->
       <h1 id="search_title">공연 검색</h1>
+      <!-- page shortcut button -->
+      <section id="page_shortcut_section">
+        <a href="./form.html">공연 추천 받기<i class="fa-solid fa-chevron-right"></i></a>
+        <a href="./search-venue.html">공연장 찾아보기<i class="fa-solid fa-chevron-right"></i></a>
+      </section>
 
       <!-- 공연 상세 검색 양식 -->
       <form action="#" id="search_form" name="searchForm">
@@ -58,8 +63,7 @@
 
           <!-- 장르 선택 -->
           <select id="select_genre" name="genre">
-            <option class="genreOptions" value="" disabled selected>장르를 선택하세요.</option>
-            <option class="genreOptions" data-genre="전체" value="전체">전체</option>
+            <option class="genreOptions" data-genre="전체" value="전체" selected>모든 장르</option>
             <option class="genreOptions" data-genre="무용" value="무용">무용</option>
             <option class="genreOptions" data-genre="뮤지컬" value="뮤지컬">뮤지컬</option>
             <option class="genreOptions" data-genre="연극" value="연극">연극</option>
@@ -98,7 +102,7 @@
           </select> -->
 
           <!-- 검색어 -->
-          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연 제목을 입력해주세요." />
+          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연 제목을 입력해주세요" />
 
           <!-- 검색 버튼 -->
           <button type="submit" class="submitBtn">

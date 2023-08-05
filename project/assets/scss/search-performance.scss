@@ -28,6 +28,21 @@ main {
     color: $fc_main;
   }
 
+  #page_shortcut_section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+
+    a {
+      margin: 0 10px;
+
+      i {
+        font-size: 14px;
+        margin-left: 3px;
+      }
+    }
+  }
+
   // 공연 상세 검색
   #search_form {
     width: 100%;
@@ -35,6 +50,7 @@ main {
     .search_fieldset {
       width: 100%;
       display: flex;
+      justify-content: center;
     }
   }
 

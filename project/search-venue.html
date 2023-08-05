@@ -49,15 +49,21 @@
     <main>
       <!-- Main Title -->
       <h1 id="search_title">공연장 검색</h1>
+      <!-- page shortcut button -->
+      <section id="page_shortcut_section">
+        <a href="./form.html">공연 추천 받기<i class="fa-solid fa-chevron-right"></i></a>
+        <a href="./search-performance.html">공연 찾아보기<i class="fa-solid fa-chevron-right"></i></a>
+      </section>
 
       <!-- 공연 상세 검색 양식 -->
       <form action="#" id="search_form" name="searchForm">
         <fieldset class="search_fieldset">
-          <!-- 날짜 선택 -->
-          <!-- <input type="date" id="input_date" name="date" data-placeholder="날짜를 선택하세요." required aria-required="true" /> -->
+          <!-- 임시
+            날짜 선택
+          <input type="date" id="input_date" name="date" data-placeholder="날짜를 선택하세요." required aria-required="true" />
 
-          <!-- 장르 선택 -->
-          <!-- <select id="select_genre" name="genre">
+          장르 선택
+          <select id="select_genre" name="genre">
             <option class="genreOptions" value="" disabled selected>장르를 선택하세요.</option>
             <option class="genreOptions" data-genre="전체" value="전체">전체</option>
             <option class="genreOptions" data-genre="무용" value="무용">무용</option>
@@ -70,8 +76,7 @@
 
           <!-- 지역 선택 -->
           <select id="select_map" name="map" onchange="this.value">
-            <option class="mapOptions" value="" disabled selected>지역을 선택하세요.</option>
-            <option class="mapOptions" value="">전국</option>
+            <option class="mapOptions" value="" selected>전국</option>
             <option class="mapOptions" value="37.5666805,126.9784147">서울</option>
             <option class="mapOptions" value="35.17944,129.07556">부산</option>
             <option class="mapOptions" value="35.87222,128.60250">대구</option>
@@ -91,14 +96,15 @@
             <option class="mapOptions" value="33.50000,126.51667">제주</option>
           </select>
 
-          <!-- 검색 타입 선택 -->
-          <!-- <select id="select_search_type" name="searchType">
+          <!-- 임시
+          검색 타입 선택
+          <select id="select_search_type" name="searchType">
             <option value="titleSearchOptions">제목검색</option>
             <option value="placeSearchOptions">장소검색</option>
           </select> -->
 
           <!-- 검색어 -->
-          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연장 이름을 입력해주세요." />
+          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연장 이름을 입력해주세요" />
 
           <!-- 검색 버튼 -->
           <button type="submit" class="submitBtn">
@@ -112,8 +118,9 @@
         <div id="map"></div>
       </div>
 
-      <!-- 결과 출력 -->
-      <!-- <div id="output_container">
+      <!-- 임시
+      결과 출력
+      <div id="output_container">
         <h3 class="span4"></h3>
         <a id="anchor"></a>
         <h2 id="title2"></h2>
