@@ -8,10 +8,13 @@ import { KOPIS_KEY } from "./key.js";
  * currentPage : 현재 검색한 API의 page (1페이지당 1000개의 data)
  */
 
-async function searchResults(selectedDate, selectedGenre, searchedType, searchedQuery, count, currentPage) {
+async function searchResults(selectedDate, selectedGenre, searchedQuery) {
   document.querySelector("#loading").classList.add("active"); // 로딩창 띄우기
 
-  let json = null;
+  // variable
+  let json = null; // json data
+  let currentPage = 1; // 현재 페이지
+  let count = 0; // 검색한 결과의 개수
 
   try {
     /**/

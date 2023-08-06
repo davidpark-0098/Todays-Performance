@@ -76,7 +76,26 @@
 
           <!-- 지역 선택 -->
           <select id="select_map" name="map" onchange="this.value">
-            <option class="mapOptions" value="" selected>전국</option>
+            <option class="mapOptions" value="지역을 선택하세요" disabled selected>지역을 선택하세요</option>
+            <option class="mapOptions" value="서울특별시">서울특별시</option>
+            <option class="mapOptions" value="부산광역시">부산광역시</option>
+            <option class="mapOptions" value="대구광역시">대구광역시</option>
+            <option class="mapOptions" value="인천광역시">인천광역시</option>
+            <option class="mapOptions" value="광주광역시">광주광역시</option>
+            <option class="mapOptions" value="대전광역시">대전광역시</option>
+            <option class="mapOptions" value="울산광역시">울산광역시</option>
+            <option class="mapOptions" value="세종특별자치시">세종특별자치시</option>
+            <option class="mapOptions" value="경기도">경기도</option>
+            <option class="mapOptions" value="강원특별자치도">강원특별자치도</option>
+            <option class="mapOptions" value="충청북도">충청북도</option>
+            <option class="mapOptions" value="충청남도">충청남도</option>
+            <option class="mapOptions" value="전라북도">전라북도</option>
+            <option class="mapOptions" value="전라남도">전라남도</option>
+            <option class="mapOptions" value="경상북도">경상북도</option>
+            <option class="mapOptions" value="경상남도">경상남도</option>
+            <option class="mapOptions" value="제주특별자치도">제주특별자치도</option>
+          </select>
+          <!-- <select id="select_map" name="map" onchange="this.value""서울" value="" selected>전국</option>
             <option class="mapOptions" value="37.5666805,126.9784147">서울</option>
             <option class="mapOptions" value="35.17944,129.07556">부산</option>
             <option class="mapOptions" value="35.87222,128.60250">대구</option>
@@ -94,8 +113,8 @@
             <option class="mapOptions" value="36.248647,128.664734">경북</option>
             <option class="mapOptions" value="35.259787,128.664734">경남</option>
             <option class="mapOptions" value="33.50000,126.51667">제주</option>
-          </select>
-
+          </select> -->
+          
           <!-- 임시
           검색 타입 선택
           <select id="select_search_type" name="searchType">
@@ -104,7 +123,7 @@
           </select> -->
 
           <!-- 검색어 -->
-          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연장 이름을 입력해주세요" />
+          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연장 이름을 입력하세요" />
 
           <!-- 검색 버튼 -->
           <button type="submit" class="submitBtn">
@@ -117,15 +136,6 @@
       <div class="map-container">
         <div id="map"></div>
       </div>
-
-      <!-- 임시
-      결과 출력
-      <div id="output_container">
-        <h3 class="span4"></h3>
-        <a id="anchor"></a>
-        <h2 id="title2"></h2>
-        <div class="row_container"></div>
-      </div> -->
     </main>
 
     <!-- footer -->
@@ -138,7 +148,7 @@
     <script src="./assets/js/include.js"></script>
     <!-- kakao key등록 / services와 clusterer, drawing 라이브러리 불러오기 -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c1ff74458a2a0d0fb979a637b3e7b7db&libraries=services,clusterer,drawing"></script>
-    <!-- 공연 상세 검색 결과 출력 및 지도와 마커 표시 -->
-    <script type="module" src="assets/js/search.js"></script>
+    <!-- 공연 검색, 공연장 지도 및 마커 표시 -->
+    <script type="module" src="assets/js/search-venue.js"></script>
   </body>
 </html>

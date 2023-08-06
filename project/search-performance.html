@@ -63,7 +63,7 @@
 
           <!-- 장르 선택 -->
           <select id="select_genre" name="genre">
-            <option class="genreOptions" data-genre="전체" value="전체" selected>모든 장르</option>
+            <option class="genreOptions" disabled selected>장르를 선택하세요</option>
             <option class="genreOptions" data-genre="무용" value="무용">무용</option>
             <option class="genreOptions" data-genre="뮤지컬" value="뮤지컬">뮤지컬</option>
             <option class="genreOptions" data-genre="연극" value="연극">연극</option>
@@ -102,7 +102,7 @@
           </select> -->
 
           <!-- 검색어 -->
-          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연 제목을 입력해주세요" />
+          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연 제목을 입력하세요" />
 
           <!-- 검색 버튼 -->
           <button type="submit" class="submitBtn">
@@ -136,7 +136,7 @@
     <!-- kakao key등록 / services와 clusterer, drawing 라이브러리 불러오기 -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c1ff74458a2a0d0fb979a637b3e7b7db&libraries=services,clusterer,drawing"></script>
     <!-- 공연 상세 검색 결과 출력 및 지도와 마커 표시 -->
-    <script type="module" src="assets/js/search.js"></script>
+    <script type="module" src="assets/js/search-performance.js"></script>
     <!-- <script type="module" src="assets/js/search_selfbackend.js"></script> -->
   </body>
 </html>
