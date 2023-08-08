@@ -58,22 +58,6 @@
       <!-- 공연 상세 검색 양식 -->
       <form action="#" id="search_form" name="searchForm">
         <fieldset class="search_fieldset">
-          <!-- 임시
-            날짜 선택
-          <input type="date" id="input_date" name="date" data-placeholder="날짜를 선택하세요." required aria-required="true" />
-
-          장르 선택
-          <select id="select_genre" name="genre">
-            <option class="genreOptions" value="" disabled selected>장르를 선택하세요.</option>
-            <option class="genreOptions" data-genre="전체" value="전체">전체</option>
-            <option class="genreOptions" data-genre="무용" value="무용">무용</option>
-            <option class="genreOptions" data-genre="뮤지컬" value="뮤지컬">뮤지컬</option>
-            <option class="genreOptions" data-genre="연극" value="연극">연극</option>
-            <option class="genreOptions" data-genre="오페라" value="오페라">오페라</option>
-            <option class="genreOptions choiced" data-genre="콘서트" value="콘서트">콘서트</option>
-            <option class="genreOptions" data-genre="클래식" value="클래식">클래식</option>
-          </select> -->
-
           <!-- 지역 선택 -->
           <select id="select_map" name="map" onchange="this.value">
             <option class="mapOptions" value="지역을 선택하세요" disabled selected>지역을 선택하세요</option>
@@ -94,34 +78,7 @@
             <option class="mapOptions" value="do,36.3436011,128.7401566">경상북도</option>
             <option class="mapOptions" value="do,35.369563,128.2570135">경상남도</option>
             <option class="mapOptions" value="do,33.3846216,126.5534925">제주특별자치도</option>
-            <!-- 35.7197198,127.1243977 -->
           </select>
-          <!-- <select id="select_map" name="map" onchange="this.value""서울" value="" selected>전국</option>
-            <option class="mapOptions" value="37.5666805,126.9784147">서울</option>
-            <option class="mapOptions" value="35.17944,129.07556">부산</option>
-            <option class="mapOptions" value="35.87222,128.60250">대구</option>
-            <option class="mapOptions" value="37.45639,126.70528">인천</option>
-            <option class="mapOptions" value="35.15972,126.85306">광주</option>
-            <option class="mapOptions" value="36.35111,127.38500">대전</option>
-            <option class="mapOptions" value="35.53889,129.31667">울산</option>
-            <option class="mapOptions" value="36.48750,127.28167">세종</option>
-            <option class="mapOptions" value="37.567167,127.190292">경기</option>
-            <option class="mapOptions" value="37.555837,128.209315">강원</option>
-            <option class="mapOptions" value="36.628503,127.929344">충북</option>
-            <option class="mapOptions" value="36.557229,126.779757">충남</option>
-            <option class="mapOptions" value="35.716705,127.144185">전북</option>
-            <option class="mapOptions" value="34.819400,126.893113">전남</option>
-            <option class="mapOptions" value="36.248647,128.664734">경북</option>
-            <option class="mapOptions" value="35.259787,128.664734">경남</option>
-            <option class="mapOptions" value="33.50000,126.51667">제주</option>
-          </select> -->
-
-          <!-- 임시
-          검색 타입 선택
-          <select id="select_search_type" name="searchType">
-            <option value="titleSearchOptions">제목검색</option>
-            <option value="placeSearchOptions">장소검색</option>
-          </select> -->
 
           <!-- 검색어 -->
           <input type="search" id="input_search_query" name="searchQuery" placeholder="공연장 이름을 입력하세요" />
@@ -147,8 +104,10 @@
     <script src="../node_modules/axios/dist/axios.min.js"></script>
     <!-- header, footer 생성 -->
     <script src="./assets/js/include.js"></script>
+
     <!-- kakao key등록 / services와 clusterer, drawing 라이브러리 불러오기 -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c1ff74458a2a0d0fb979a637b3e7b7db&libraries=services,clusterer,drawing"></script>
+
     <!-- 공연 검색, 공연장 지도 및 마커 표시 -->
     <script type="module" src="assets/js/search-venue.js"></script>
   </body>

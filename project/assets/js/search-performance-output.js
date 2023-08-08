@@ -1,4 +1,4 @@
-import { KOPIS_KEY } from "./key.js";
+import KOPIS_KEY from "./key.js";
 
 /** 검색
  * searchQeury : 유저가 입력한 검색어

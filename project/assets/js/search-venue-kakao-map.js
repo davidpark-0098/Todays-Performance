@@ -1,4 +1,4 @@
-import { KOPIS_KEY } from "./key.js";
+import KOPIS_KEY from "./key.js";
 
 function searchVenueKaKaoMap(selectedMap, searchedQuery) {
   /**
