@@ -7,6 +7,10 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="./assets/css/search-venue.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- Fontawesome -->
+    <script src="https://kit.fontawesome.com/4691863309.js" crossorigin="anonymous"></script>
 
     <!-- favicon -->
     <link rel="shortcut icon" href="./assets/favicon/favicon.ico" type="image/x-icon" />
@@ -28,12 +32,6 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="./assets/favicon/ms-icon-144x144.png" />
     <meta name="theme-color" content="#ffffff" />
-
-    <!-- 폰트 어썸 -->
-    <script src="https://kit.fontawesome.com/4691863309.js" crossorigin="anonymous"></script>
-
-    <!-- library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <title>오늘의 공연</title>
   </head>
@@ -60,7 +58,7 @@
         <fieldset class="search_fieldset">
           <!-- 지역 선택 -->
           <select id="select_map" name="map" onchange="this.value">
-            <option class="mapOptions" value="지역을 선택하세요" disabled selected>지역을 선택하세요</option>
+            <option class="mapOptions" disabled selected>지역을 선택하세요</option>
             <option class="mapOptions" value="si,37.5518911,126.9917937">서울특별시</option>
             <option class="mapOptions" value="si,35.2100142,129.0688702">부산광역시</option>
             <option class="mapOptions" value="si,35.8294374,128.5655119">대구광역시</option>
@@ -84,7 +82,7 @@
           <input type="search" id="input_search_query" name="searchQuery" placeholder="공연장 이름을 입력하세요" />
 
           <!-- 검색 버튼 -->
-          <button type="submit" class="submitBtn">
+          <button type="submit" id="submit_btn">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </fieldset>
@@ -102,6 +100,7 @@
     <!-- script -->
     <!-- axios Library -->
     <script src="../node_modules/axios/dist/axios.min.js"></script>
+
     <!-- header, footer 생성 -->
     <script src="./assets/js/include.js"></script>
 

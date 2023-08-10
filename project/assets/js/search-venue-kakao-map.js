@@ -4,9 +4,6 @@ function searchVenueKaKaoMap(selectedMap, searchedQuery) {
   /**
    * 지도 표시
    */
-  // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-  var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-
   var mapContainer = document.getElementById("map"), // 지도를 표시할 div
     mapOption = {
       center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
@@ -31,7 +28,7 @@ function searchVenueKaKaoMap(selectedMap, searchedQuery) {
   map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
   /**
-   * 공연 장소명을 중복없는 배열로 처리 후, search_map 함수 호출을 통해 지도에 표시
+   * 공연 장소명을 중복없는 배열로 처리 후, searchVenue() 함수 호출을 통해 지도에 표시
    */
   (async () => {
     let json = null;
@@ -77,6 +74,9 @@ function searchVenueKaKaoMap(selectedMap, searchedQuery) {
     });
   })();
 
+  // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+  var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
   /**
    * 지도 검색 및 마커 표시
    * placeNameArray에서 장소명을 파라미터로 지도에 검색 후 마커 표시
@@ -90,6 +90,7 @@ function searchVenueKaKaoMap(selectedMap, searchedQuery) {
 
     // 키워드 검색 완료 시 호출되는 콜백함수 입니다
     function placesSearchCB(data, status, pagination) {
+      console.log(data);
       if (status === kakao.maps.services.Status.OK) {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -115,10 +116,33 @@ function searchVenueKaKaoMap(selectedMap, searchedQuery) {
 
       // 마커에 클릭이벤트를 등록합니다
       kakao.maps.event.addListener(marker, "click", function () {
+        var placeWi = "hi";
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + "</div>");
+        infowindow.setContent(
+          '<div class="markerDiv">' +
+            '<a class="markerLink" href={placeWi} target="_blank" rel="noreferrer">' +
+            '<span class="markerTitle">' +
+            place.place_name +
+            "</span>" +
+            "</a>" +
+            "</div>"
+        );
         infowindow.open(map, marker);
       });
+
+      // // 마커에 마우스오버 이벤트를 등록합니다
+      // kakao.maps.event.addListener(marker, "mouseover", function () {
+      //   // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+      //   infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + "</div>");
+      //   // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+      //   infowindow.open(map, marker);
+      // });
+
+      // // 마커에 마우스아웃 이벤트를 등록합니다
+      // kakao.maps.event.addListener(marker, "mouseout", function () {
+      //   // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+      //   infowindow.close();
+      // });
     }
   }
 
