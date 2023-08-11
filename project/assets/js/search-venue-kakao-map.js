@@ -1,5 +1,8 @@
 // selectedMap은 확대단계 | 위도 | 경도 | 지역 을 나타냅니다
 function searchVenueKaKaoMap([selectedMapZoomLevel, selectedMapLat, selectedMapLng, selectedMapAria], searchedQuery) {
+  // 지도가 중첩되어 생성되는 것을 방지하기 위해 기존에 생성한 지도는 삭제합니다
+  document.getElementById("map").innerHTML = "";
+
   /**
    * 지도 표시
    */
