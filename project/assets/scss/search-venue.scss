@@ -20,25 +20,39 @@
 main {
   width: 1000px;
   min-width: 500px;
-  margin: 0 auto;
+  margin: 0 auto 30px;
 
-  #search_title {
-    text-align: center;
-    font-weight: bold;
-    color: $fc_main;
-  }
-
-  #page_shortcut_section {
+  #search_title_div {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
+    align-items: baseline;
+
+    #search_title {
+      text-align: center;
+      font-weight: bold;
+      color: $fc_main;
+
+      margin: 0 15px 10px;
+    }
 
     a {
-      margin: 0 10px;
+      font-size: 16px;
+      transition: 0.3s all;
+      color: $fc_sub;
+
+      &:hover {
+        color: $fc_main;
+      }
 
       i {
         font-size: 14px;
-        margin-left: 3px;
+
+        &:first-child {
+          margin-right: 3px;
+        }
+        &:last-child {
+          margin-left: 3px;
+        }
       }
     }
   }
