@@ -47,13 +47,14 @@
 
     <!-- main -->
     <main>
-      <!-- Main Title -->
-      <h1 id="search_title">공연 검색</h1>
-      <!-- page shortcut button -->
-      <section id="page_shortcut_section">
-        <a href="./form.html">공연 추천 받기<i class="fa-solid fa-chevron-right"></i></a>
+      <div id="search_title_div">
+        <!-- page shortcut -->
+        <a href="./form.html"><i class="fa-solid fa-chevron-left"></i>공연 추천 받기</a>
+        <!-- Main Title -->
+        <h1 id="search_title">공연 검색</h1>
+        <!-- page shortcut -->
         <a href="./search-venue.html">공연장 찾아보기<i class="fa-solid fa-chevron-right"></i></a>
-      </section>
+      </div>
 
       <!-- 공연 상세 검색 양식 -->
       <form action="#" id="search_form" name="searchForm">
@@ -64,6 +65,7 @@
           <!-- 장르 선택 -->
           <select id="select_genre" name="genre">
             <option class="genreOptions" disabled selected>장르를 선택하세요</option>
+            <option class="genreOptions" data-genre="전체" value="전체">전체</option>
             <option class="genreOptions" data-genre="무용" value="무용">무용</option>
             <option class="genreOptions" data-genre="뮤지컬" value="뮤지컬">뮤지컬</option>
             <option class="genreOptions" data-genre="연극" value="연극">연극</option>
@@ -72,57 +74,18 @@
             <option class="genreOptions" data-genre="클래식" value="클래식">클래식</option>
           </select>
 
-          <!-- 지역 선택 -->
-          <!-- <select id="select_map" name="map" onchange="this.value">
-            <option class="mapOptions" value="" disabled selected>지역을 선택하세요.</option>
-            <option class="mapOptions" value="">전국</option>
-            <option class="mapOptions" value="37.5666805,126.9784147">서울</option>
-            <option class="mapOptions" value="35.17944,129.07556">부산</option>
-            <option class="mapOptions" value="35.87222,128.60250">대구</option>
-            <option class="mapOptions" value="37.45639,126.70528">인천</option>
-            <option class="mapOptions" value="35.15972,126.85306">광주</option>
-            <option class="mapOptions" value="36.35111,127.38500">대전</option>
-            <option class="mapOptions" value="35.53889,129.31667">울산</option>
-            <option class="mapOptions" value="36.48750,127.28167">세종</option>
-            <option class="mapOptions" value="37.567167,127.190292">경기</option>
-            <option class="mapOptions" value="37.555837,128.209315">강원</option>
-            <option class="mapOptions" value="36.628503,127.929344">충북</option>
-            <option class="mapOptions" value="36.557229,126.779757">충남</option>
-            <option class="mapOptions" value="35.716705,127.144185">전북</option>
-            <option class="mapOptions" value="34.819400,126.893113">전남</option>
-            <option class="mapOptions" value="36.248647,128.664734">경북</option>
-            <option class="mapOptions" value="35.259787,128.664734">경남</option>
-            <option class="mapOptions" value="33.50000,126.51667">제주</option>
-          </select> -->
-
-          <!-- 검색 타입 선택 -->
-          <!-- <select id="select_search_type" name="searchType">
-            <option value="titleSearchOptions">제목검색</option>
-            <option value="placeSearchOptions">장소검색</option>
-          </select> -->
-
           <!-- 검색어 -->
-          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연 제목을 입력하세요" />
+          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연 제목 또는 공연장 이름을 입력하세요" />
 
           <!-- 검색 버튼 -->
-          <button type="submit" class="submitBtn">
+          <button type="submit" id="submit_btn">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </fieldset>
       </form>
 
-      <!-- 지도 표시 -->
-      <div class="map-container">
-        <div id="map"></div>
-      </div>
-
       <!-- 결과 출력 -->
-      <div id="output_container">
-        <h3 class="span4"></h3>
-        <a id="anchor"></a>
-        <h2 id="title2"></h2>
-        <div class="row_container"></div>
-      </div>
+      <section id="output_section"></section>
     </main>
 
     <!-- footer -->
@@ -131,12 +94,13 @@
     <!-- script -->
     <!-- axios Library -->
     <script src="../node_modules/axios/dist/axios.min.js"></script>
+
     <!-- header, footer 생성 -->
     <script src="./assets/js/include.js"></script>
-    <!-- kakao key등록 / services와 clusterer, drawing 라이브러리 불러오기 -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c1ff74458a2a0d0fb979a637b3e7b7db&libraries=services,clusterer,drawing"></script>
+
     <!-- 공연 상세 검색 결과 출력 및 지도와 마커 표시 -->
     <script type="module" src="assets/js/search-performance.js"></script>
+
     <!-- <script type="module" src="assets/js/search_selfbackend.js"></script> -->
   </body>
 </html>
