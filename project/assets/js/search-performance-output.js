@@ -1,20 +1,19 @@
 import KOPIS_KEY from "./key.js";
 
-/** 검색
- * searchQeury : 유저가 입력한 검색어
- * chooseDate : 유저가 원하는 날짜
- * gerenField : 유저가 선택한 장르의 배열
- * count : 현재 출력된 검색 결과의 수
- * currentPage : 현재 검색한 API의 page (1페이지당 1000개의 data)
+/**
+ * 공연 데이터를 HTML로 생성합니다
+ * @param {Date} selectedDate : 선택한 날짜
+ * @param {String} selectedGenre : 선택한 장르
+ * @param {String} searchedQuery : 검색어
+ * @returns
  */
-
-async function searchResults(selectedDate, selectedGenre, searchedQuery) {
+async function searchPerformanceOutput(selectedDate, selectedGenre, searchedQuery) {
   document.querySelector("#loading").classList.add("active"); // 로딩창 띄우기
 
   // variable
   let json = null; // json data
-  let currentPage = 1; // 현재 페이지
-  let count = 0; // 검색한 결과의 개수
+  let currentPage = 1; // 현재 검색한 페이지
+  let count = 0; // 현재 출력된 검색 결과의 개수
 
   try {
     /**/
@@ -51,73 +50,94 @@ async function searchResults(selectedDate, selectedGenre, searchedQuery) {
     return;
   }
 
-  // json은 공연 데이터입니다.
-  json.forEach((v) => {
-    const temporalCoverage = v.temporalCoverage.replaceAll(".", "-").split("~");
+  /**
+   * 아래는 json의 데이터 중 공연 하나의 예시입니다
+   * collectionDb: "kopis01_공연목록";
+   * creator: "홈페이지";
+   * language: "kor";
+   * referenceIdentifier: "http://www.kopis.or.kr/upload/pfmPoster/PF_PF153974_190903_094953.gif";
+   * spatialCoverage: "성남아트센터";
+   * subDescription: "공연상태: 공연완료 오픈런: N";
+   * subjectCategory: "콘서트";
+   * temporalCoverage: "2019.12.07~2019.12.07";
+   * title: "장윤정 라이브 콘서트 [성남]";
+   * url: "http://www.kopis.or.kr/por/db/pblprfr/pblprfrView.do?menuId=MNU_00020&mt20Id=PF153974#20819";
+   */
 
-    // 가져오는 api 공연 데이터가 2023년도 기준에 미치지 않기 때문에, 모든 공연 시작과 끝 날짜에 3년을 더합니다.
-    const performanceStartDate = new Date(temporalCoverage[0]);
-    performanceStartDate.setFullYear(performanceStartDate.getFullYear() + 4); // 공연 시작 날짜에 3년을 더합니다.
-    const performanceEndDate = new Date(temporalCoverage[1]);
-    performanceEndDate.setFullYear(performanceEndDate.getFullYear() + 4); // 공연 끝 날짜에 3년을 더합니다.
+  /**
+   * json data의 기간을 배열로 변환하여, 시작 날짜의 데이터를 반환합니다
+   * @param {Object} : json의 한개 데이터
+   */
+  const periodStartDate = (performanceData) => new Date(performanceData.temporalCoverage.replaceAll(".", "-").split("~")[0]);
 
-    // 공연 제목 또는 장소 검색 조건에 따라 구분 합니다.
-    let titleFilter = true;
-    // 공연 제목 검색
-    if (searchedQuery > 0) {
-      searchedType == "titleSearchOptions" && v.title.includes(searchedQuery) ? (titleFilter = true) : (titleFilter = false);
-      // 공연 장소 검색
-      searchedType == "placeSearchOptions" && v.spatialCoverage.includes(searchedQuery) ? (titleFilter = true) : (titleFilter = false);
-    }
+  json
+    .filter((v) => {
+      // 가져오는 api 공연 데이터가 2023년도 기준에 미치지 않기 때문에, 모든 공연 시작과 끝 날짜에 4년을 더합니다.
+      const performanceStartDate = periodStartDate(v).setFullYear(periodStartDate(v).getFullYear() + 4);
 
-    // 장르
-    if (selectedGenre == v.subjectCategory || selectedGenre == "전체") {
-      // 날짜 && 출력수 && 검색어
-      if (selectedDate >= performanceStartDate && selectedDate <= performanceEndDate && count <= 40 && titleFilter) {
-        document.querySelector("#loading").classList.remove("active"); // 로딩바 닫기
+      // 출력한 공연 검색 결과 개수가 40개 미만일때 통과
+      if (!(count <= 40)) return false;
 
-        const div = document.createElement("div");
-        div.classList.add("rec_container");
-        div.classList.add("animate__animated");
-        div.classList.add("animate__fadeInUp");
-        div.style.setProperty("--animate-duration", count * 100 + 1000 + "ms");
-        count++;
+      // 선택한 날짜가 공연 시작 날짜보다 클때 통과
+      if (!(selectedDate <= performanceStartDate)) return false;
 
-        const img = document.createElement("img");
-        img.classList.add("hvr-grow");
-        const h3 = document.createElement("h3");
-        const h4 = document.createElement("h4");
-        const p1 = document.createElement("p");
-        const p = document.createElement("p");
-        img.setAttribute("src", v.referenceIdentifier);
-        h3.innerHTML = v.title;
-        h4.innerHTML = v.spatialCoverage;
-        p1.innerHTML = v.subjectCategory;
+      // 선택한 장르가 일치하거나 전체일때 통과
+      if (!(selectedGenre === v.subjectCategory || selectedGenre === "전체")) return false;
 
-        /** api가 대부분 과거의 공연정보 이기 때문에 공연 기간에 임시로 3년을 더해서 표현합니다. */
-        let plusThreeYear = v.temporalCoverage
-          .replaceAll("2022", "2025")
-          .replaceAll("2021", "2024")
-          .replaceAll("2020", "2023")
-          .replaceAll("2019", "2022")
-          .replaceAll("2018", "2021")
-          .replaceAll("2017", "2020");
-        p.innerHTML = plusThreeYear;
+      // 검색어가 있다면, 공연 제목 또는 공연 장소 중 검색어에 포함되어 있을때 통과
+      if (!(searchedQuery ? v.title.includes(searchedQuery) || v.spatialCoverage.includes(searchedQuery) : true)) return false;
 
-        div.addEventListener("click", (e) => {
-          window.open(v.url);
-        });
+      // 조건에 부합하는 Object 데이터 배열로 반환
+      return true;
+    })
+    // 검색 조건에 부합하는 데이터에서, 공연 시작 날짜를 기준으로 데이터를 오름차순으로 정렬
+    .sort((a, b) => periodStartDate(a) - periodStartDate(b))
+    // 정렬된 공연 데이터를 html로 생성
+    .forEach((v) => {
+      document.querySelector("#loading").classList.remove("active"); // 로딩바 닫기
 
-        div.appendChild(img);
-        div.appendChild(h3);
-        div.appendChild(h4);
-        div.appendChild(p1);
-        div.appendChild(p);
+      const performanceArticle = document.createElement("article");
+      count++;
 
-        document.querySelector(".row_container").appendChild(div);
-      }
-    }
-  });
+      const posterImg = document.createElement("img");
+      const titleA = document.createElement("a");
+      titleA.classList.add("titleA");
+      titleA.href = v.url;
+      titleA.target = "_blank";
+      titleA.rel = "noreferrer";
+      const venueA = document.createElement("a");
+      venueA.classList.add("venueA");
+
+      const genreSpan = document.createElement("span");
+      genreSpan.classList.add("genreSpan");
+      const periodSpan = document.createElement("span");
+      periodSpan.classList.add("periodSpan");
+
+      posterImg.setAttribute("src", v.referenceIdentifier);
+      titleA.innerHTML = v.title;
+      venueA.innerHTML = v.spatialCoverage;
+      genreSpan.innerHTML = v.subjectCategory;
+      /** api가 대부분 과거의 공연정보 이기 때문에 공연 기간에 임시로 3년을 더해서 표현합니다. */
+      periodSpan.innerHTML = v.temporalCoverage
+        .replaceAll("2022", "2026")
+        .replaceAll("2021", "2025")
+        .replaceAll("2020", "2024")
+        .replaceAll("2019", "2023")
+        .replaceAll("2018", "2022")
+        .replaceAll("2017", "2021");
+
+      performanceArticle.addEventListener("click", (e) => {
+        window.open(v.url);
+      });
+
+      performanceArticle.appendChild(posterImg);
+      performanceArticle.appendChild(titleA);
+      performanceArticle.appendChild(venueA);
+      performanceArticle.appendChild(genreSpan);
+      performanceArticle.appendChild(periodSpan);
+
+      document.getElementById("output_section").appendChild(performanceArticle);
+    });
 
   // 결과 최대 40개까지만 출력
   if (count < 40) {
@@ -131,8 +151,8 @@ async function searchResults(selectedDate, selectedGenre, searchedQuery) {
       console.log(currentPage + "페이지까지 검색했지만 결과가 나오지 않아 검색을 중단합니다.");
       return;
     }
-    searchResults(selectedDate, selectedGenre, searchedType, searchedQuery, count, currentPage);
+    // searchResults(selectedDate, selectedGenre, searchedQuery, count, currentPage);
   }
 }
 
-export default searchResults;
+export default searchPerformanceOutput;

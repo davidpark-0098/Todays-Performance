@@ -1,5 +1,5 @@
 // 공연 검색
-import searchPerformacneOutput from "./search-performance-output.js";
+import searchPerformanceOutput from "./search-performance-output.js";
 
 // 날짜 기본 값을 오늘로 지정
 document.querySelector("#input_date").valueAsDate = new Date();
@@ -29,8 +29,7 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
     alert("장르를 선택해 주세요.");
   } else {
     // 예외처리를 통과하면, 검색을 시작합니다.
-    // searchResults 함수는 search-results.js 파일의 함수입니다.
-    searchPerformacneOutput(new Date(selectedDate), selectedGenre, searchedQuery);
+    searchPerformanceOutput(new Date(selectedDate), selectedGenre, searchedQuery);
 
     // 검색 결과가 없다면, 검색 결과 메시지를 출력합니다.
     setTimeout(() => {
