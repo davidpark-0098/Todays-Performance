@@ -39,15 +39,23 @@ function searchVenueKaKaoMap([selectedMapZoomLevel, selectedMapLat, selectedMapL
 
   /**
    * 지도 검색 및 마커 표시
-   * placeNameArray에서 장소명을 파라미터로 지도에 검색 후 마커 표시
    */
-  // 검색어가 있는 경우와 없는 경우에 따라, 검색어 또는 공연장으로 장소를 검색합니다
-  // 장소 검색 객체를 생성합니다
-  var places = new kakao.maps.services.Places(map);
-  // 키워드로 장소를 검색합니다
-  // searchedQeury 검색어가 없는 경우 공연장으로 검색합니다
-  // useMapBouds를 사용하면, places의 map에 지정된 좌표 중심을 기준으로 검색합니다
-  places.keywordSearch(searchedQuery || "공연장", placesSearchCB, { useMapBounds: true });
+  // 공연검색 페이지의 공연 결과에서, 공연장을 눌렀을 때, 전국 지역으로 해당 공연장을 검색합니다
+  if (selectedMapAria === "전국") {
+    // 장소 검색 객체를 생성합니다
+    var ps = new kakao.maps.services.Places();
+
+    // 키워드로 장소를 검색합니다
+    ps.keywordSearch(searchedQuery, placesSearchCB);
+  } else {
+    // 공연장 검색 페이지에서 직접 검색합니다
+    // 장소 검색 객체를 생성합니다
+    var places = new kakao.maps.services.Places(map);
+    // 키워드로 장소를 검색합니다
+    // searchedQuery의 검색어가 있는 경우와 없는 경우에 따라, 검색어 또는 공연장으로 장소를 검색합니다
+    // useMapBouds를 사용하면, places의 map에 지정된 좌표 중심을 기준으로 검색합니다
+    places.keywordSearch(searchedQuery || "공연장", placesSearchCB, { useMapBounds: true });
+  }
 
   /**
    * 키워드 검색 완료 시 호출되는 콜백함수 입니다
@@ -73,19 +81,33 @@ function searchVenueKaKaoMap([selectedMapZoomLevel, selectedMapLat, selectedMapL
      */
 
     if (status === kakao.maps.services.Status.OK) {
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-      // LatLngBounds 객체에 좌표를 추가합니다
-      // var bounds = new kakao.maps.LatLngBounds();
-      // bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-      // map.setBounds(bounds);
+      // 지역이 전국 또는 각 지역에 따라 다르게 필터링합니다F
+      if (selectedMapAria === "전국") {
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        var bounds = new kakao.maps.LatLngBounds();
 
-      // searchedQeury의 검색 결과가 여러개일 경우
-      // 모든 결과 중, 선택한 장소와 카테고리 그룹 코드가 일치하는 장소를 마커로 표시합니다
-      data.forEach((v) => v.address_name.substring(0, 2) === selectedMapAria && v.category_group_code === "CT1" && displayMarker(v));
+        data.forEach((v, i) => {
+          // 데이터를 필터링 후 마커를 표시합니다
+          v.category_group_code === "CT1" && displayMarker(v);
+          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        });
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
 
-      // 다음 페이지가 있으면 다음 페이지를 검색합니다
-      if (pagination.hasNextPage) pagination.nextPage();
+        // 검색 직후 지역 선택에, 검색 결과의 지역을 설정합니다
+        const select = document.getElementById("select_map");
+        const option = select.querySelector(`option[data-map=${data[0].address_name.substring(0, 2)}]`);
+        if (option) select.selectedIndex = option.index;
+      } else {
+        // searchedQeury의 검색 결과가 여러개일 경우
+        // 모든 결과 중, 선택한 장소와 카테고리 그룹 코드가 일치하는 장소를 마커로 표시합니다
+        data.forEach((v) => {
+          v.address_name.substring(0, 2) === selectedMapAria && v.category_group_code === "CT1" && displayMarker(v);
+        });
+        // 다음 페이지가 있으면 다음 페이지를 검색합니다
+        if (pagination.hasNextPage) pagination.nextPage();
+      }
     }
   }
 

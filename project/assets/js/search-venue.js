@@ -1,6 +1,15 @@
 // 공연장 지도 및 마커 표시
 import searchVenueKakaoMap from "./search-venue-kakao-map.js";
 
+// search performance 공연 검색 결과에서 선택한 공연장을 파라미터로 전달 받습니다
+const urlParams = new URLSearchParams(window.location.search);
+// 파라미터가 있을 경우 해당 공연장을 검색합니다
+if (urlParams.get("venue")) {
+  // 선택한 공연장 이름을 input에 설정합니다
+  document.getElementById("input_search_query").value = urlParams.get("venue");
+  searchVenueKakaoMap([14, 35.907757, 127.766922, "전국"], urlParams.get("venue"));
+}
+
 /**
  * form의 submit 이벤트 발생 시, 선택한 각각의 옵션 값을 변수에 할당합니다.
  * searchVenueKakaoMap() 함수를 실행합니다.

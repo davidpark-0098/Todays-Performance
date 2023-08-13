@@ -107,6 +107,9 @@ async function searchPerformanceOutput(selectedDate, selectedGenre, searchedQuer
       titleA.target = "_blank";
       titleA.rel = "noreferrer";
       const venueA = document.createElement("a");
+      venueA.href = `http://127.0.0.1:5500/project/search-venue.html?venue=${v.spatialCoverage}`;
+      venueA.target = "_blank";
+      venueA.rel = "noreferrer";
       venueA.classList.add("venueA");
 
       const genreSpan = document.createElement("span");
