@@ -100,6 +100,7 @@ async function searchPerformanceOutput(selectedDate, selectedGenre, searchedQuer
       count++;
 
       const posterImg = document.createElement("img");
+      posterImg.classList.add("posterImg");
       const titleA = document.createElement("a");
       titleA.classList.add("titleA");
       titleA.href = v.url;
@@ -125,10 +126,6 @@ async function searchPerformanceOutput(selectedDate, selectedGenre, searchedQuer
         .replaceAll("2019", "2023")
         .replaceAll("2018", "2022")
         .replaceAll("2017", "2021");
-
-      performanceArticle.addEventListener("click", (e) => {
-        window.open(v.url);
-      });
 
       performanceArticle.appendChild(posterImg);
       performanceArticle.appendChild(titleA);
