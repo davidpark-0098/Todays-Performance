@@ -7,7 +7,7 @@ const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get("venue")) {
   // 선택한 공연장 이름을 input에 설정합니다
   document.getElementById("input_search_query").value = urlParams.get("venue");
-  searchVenueKakaoMap([14, 35.907757, 127.766922, "전국"], urlParams.get("venue"));
+  searchVenueKakaoMap("공연장", urlParams.get("venue"));
 }
 
 /**
@@ -21,9 +21,11 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
 
   // FormData 객체를 사용하여 폼 데이터 접근
   // 선택한 지역의 구역과 좌표값을 배열로 반환합니다
-  const selectedMap = formData.get("map")?.split(",");
+  const selectedMap = formData.get("map");
   // 입력한 검색어의 공백을 제거한 값을 반환합니다
   const searchedQuery = formData.get("searchQuery").trim();
+
+  console.log(selectedMap, searchedQuery);
 
   // 지역 값 검사
   if (selectedMap === undefined || selectedMap === null) {

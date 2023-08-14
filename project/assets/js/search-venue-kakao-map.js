@@ -1,7 +1,31 @@
 // selectedMap은 확대단계 | 위도 | 경도 | 지역 을 나타냅니다
-function searchVenueKaKaoMap([selectedMapZoomLevel, selectedMapLat, selectedMapLng, selectedMapAria], searchedQuery) {
+function searchVenueKaKaoMap(selectedMapArea, searchedQuery) {
   // 지도가 중첩되어 생성되는 것을 방지하기 위해 기존에 생성한 지도는 삭제합니다
   document.getElementById("map").innerHTML = "";
+
+  const areaCoordinate = {
+    공연장: [35.907757, 127.766922, 14],
+    전국: [35.907757, 127.766922, 14],
+    서울: [37.5518911, 126.9917937, 9],
+    부산: [35.2100142, 129.0688702, 9],
+    대구: [35.8294374, 128.5655119, 9],
+    인천: [37.4562557, 126.7052062, 9],
+    광주: [35.1557358, 126.8354271, 9],
+    대전: [36.3398175, 127.3940486, 9],
+    울산: [35.5537228, 129.2380554, 9],
+    세종: [36.5606976, 127.2587334, 9],
+    경기: [37.5289145, 127.1727772, 10],
+    강원: [37.724962, 128.3009629, 10],
+    충북: [36.7378449, 127.8305242, 10],
+    충남: [36.5296003, 126.8590621, 10],
+    전북: [35.7197198, 127.1243977, 10],
+    전남: [34.9402001, 126.9565003, 10],
+    경북: [36.3436011, 128.7401566, 10],
+    경남: [35.369563, 128.2570135, 10],
+    제주: [33.3846216, 126.5534925, 10],
+  };
+
+  const [selectedMapLat, selectedMapLng, selectedMapZoomLevel] = areaCoordinate[selectedMapArea];
 
   /**
    * 지도 표시
@@ -41,20 +65,30 @@ function searchVenueKaKaoMap([selectedMapZoomLevel, selectedMapLat, selectedMapL
    * 지도 검색 및 마커 표시
    */
   // 공연검색 페이지의 공연 결과에서, 공연장을 눌렀을 때, 전국 지역으로 해당 공연장을 검색합니다
-  if (selectedMapAria === "전국") {
-    // 장소 검색 객체를 생성합니다
-    var ps = new kakao.maps.services.Places();
 
-    // 키워드로 장소를 검색합니다
-    ps.keywordSearch(searchedQuery, placesSearchCB);
-  } else {
-    // 공연장 검색 페이지에서 직접 검색합니다
-    // 장소 검색 객체를 생성합니다
-    var places = new kakao.maps.services.Places(map);
-    // 키워드로 장소를 검색합니다
-    // searchedQuery의 검색어가 있는 경우와 없는 경우에 따라, 검색어 또는 공연장으로 장소를 검색합니다
-    // useMapBouds를 사용하면, places의 map에 지정된 좌표 중심을 기준으로 검색합니다
-    places.keywordSearch(searchedQuery || "공연장", placesSearchCB, { useMapBounds: true });
+  // 공연장 검색 페이지에서 직접 검색합니다
+  // 장소 검색 객체를 생성합니다
+  var places = new kakao.maps.services.Places();
+  // 키워드로 장소를 검색합니다
+  // searchedQuery의 검색어가 있는 경우와 없는 경우에 따라, 검색어 또는 공연장으로 장소를 검색합니다
+  // useMapBouds를 사용하면, places의 map에 지정된 좌표 중심을 기준으로 검색합니다
+
+  if (selectedMapArea === "공연장") {
+    keywordSearch(searchedQuery);
+  } else if (selectedMapArea === "전국" && !searchedQuery) {
+    for (let area in areaCoordinate) {
+      keywordSearch(area !== "공연장" || area !== "전국" ? area + " 공연장" : false);
+    }
+  } else if (selectedMapArea === "전국" && searchedQuery) {
+    keywordSearch(searchedQuery);
+  } else if (selectedMapArea && searchedQuery) {
+    keywordSearch(selectedMapArea + " " + searchedQuery);
+  } else if (selectedMapArea) {
+    keywordSearch(selectedMapArea + " 공연장");
+  }
+  console.log(keyword);
+  function keywordSearch(keyword) {
+    places.keywordSearch(keyword, placesSearchCB, { category_group_code: "CT1" });
   }
 
   /**
@@ -81,15 +115,15 @@ function searchVenueKaKaoMap([selectedMapZoomLevel, selectedMapLat, selectedMapL
      */
 
     if (status === kakao.maps.services.Status.OK) {
-      // 지역이 전국 또는 각 지역에 따라 다르게 필터링합니다F
-      if (selectedMapAria === "전국") {
+      // 지역이 전국 또는 각 지역에 따라 다르게 필터링합니다
+      if (selectedMapArea === "공연장") {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         var bounds = new kakao.maps.LatLngBounds();
 
         data.forEach((v, i) => {
           // 데이터를 필터링 후 마커를 표시합니다
-          v.category_group_code === "CT1" && displayMarker(v);
+          displayMarker(v);
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         });
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
@@ -103,7 +137,7 @@ function searchVenueKaKaoMap([selectedMapZoomLevel, selectedMapLat, selectedMapL
         // searchedQeury의 검색 결과가 여러개일 경우
         // 모든 결과 중, 선택한 장소와 카테고리 그룹 코드가 일치하는 장소를 마커로 표시합니다
         data.forEach((v) => {
-          v.address_name.substring(0, 2) === selectedMapAria && v.category_group_code === "CT1" && displayMarker(v);
+          displayMarker(v);
         });
         // 다음 페이지가 있으면 다음 페이지를 검색합니다
         if (pagination.hasNextPage) pagination.nextPage();
