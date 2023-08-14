@@ -3,7 +3,10 @@ function searchVenueKaKaoMap(selectedMapArea, searchedQuery) {
   // 지도가 중첩되어 생성되는 것을 방지하기 위해 기존에 생성한 지도는 삭제합니다
   document.getElementById("map").innerHTML = "";
 
+  // 선택한 지역에 따라 map의 좌표와 확대 레벨을 초기화 합니다
+  // 지역: [위도, 경도, 확대 레벨]
   const areaCoordinate = {
+    // 공연장은 search-performance 페이지에서 선택한 공연장으로, map의 초기화를 위해 전국 좌표를 지정했습니다
     공연장: [35.907757, 127.766922, 14],
     전국: [35.907757, 127.766922, 14],
     서울: [37.5518911, 126.9917937, 9],
@@ -24,7 +27,6 @@ function searchVenueKaKaoMap(selectedMapArea, searchedQuery) {
     경남: [35.369563, 128.2570135, 10],
     제주: [33.3846216, 126.5534925, 10],
   };
-
   const [selectedMapLat, selectedMapLng, selectedMapZoomLevel] = areaCoordinate[selectedMapArea];
 
   /**
@@ -73,20 +75,29 @@ function searchVenueKaKaoMap(selectedMapArea, searchedQuery) {
   // searchedQuery의 검색어가 있는 경우와 없는 경우에 따라, 검색어 또는 공연장으로 장소를 검색합니다
   // useMapBouds를 사용하면, places의 map에 지정된 좌표 중심을 기준으로 검색합니다
 
+  // 지역이 공연장일 경우
   if (selectedMapArea === "공연장") {
     keywordSearch(searchedQuery);
+
+    // 지역이 전국이며 검색어가 없는 경우
   } else if (selectedMapArea === "전국" && !searchedQuery) {
     for (let area in areaCoordinate) {
       keywordSearch(area !== "공연장" || area !== "전국" ? area + " 공연장" : false);
     }
+
+    // 지역이 전국이며 검색어가 있는 경우
   } else if (selectedMapArea === "전국" && searchedQuery) {
     keywordSearch(searchedQuery);
+
+    // 지역과 검색어가 있는 경우
   } else if (selectedMapArea && searchedQuery) {
     keywordSearch(selectedMapArea + " " + searchedQuery);
-  } else if (selectedMapArea) {
+
+    // 지역이 있고 검색어가 없는 경우
+  } else if (selectedMapArea && !searchedQuery) {
     keywordSearch(selectedMapArea + " 공연장");
   }
-  console.log(keyword);
+
   function keywordSearch(keyword) {
     places.keywordSearch(keyword, placesSearchCB, { category_group_code: "CT1" });
   }
@@ -131,7 +142,7 @@ function searchVenueKaKaoMap(selectedMapArea, searchedQuery) {
 
         // 검색 직후 지역 선택에, 검색 결과의 지역을 설정합니다
         const select = document.getElementById("select_map");
-        const option = select.querySelector(`option[data-map=${data[0].address_name.substring(0, 2)}]`);
+        const option = select.querySelector(`[value=${data[0].address_name.substring(0, 2)}]`);
         if (option) select.selectedIndex = option.index;
       } else {
         // searchedQeury의 검색 결과가 여러개일 경우
