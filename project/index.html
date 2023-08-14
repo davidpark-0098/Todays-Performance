@@ -110,9 +110,14 @@
         // json에서 1페이지 1번 ~ 14번까지 포스터를 img태그로 생성
         for (let i = 0; i < 14; i++) {
           const img = document.createElement("img");
-          img.setAttribute("src", `${json[i].referenceIdentifier}`);
           img.classList.add("hvr-grow");
-          document.querySelector("#today").appendChild(img);
+          img.setAttribute("src", `${json[i].referenceIdentifier}`);
+          const a = document.createElement("a");
+          a.href = json[i].url;
+          a.target = "_blank";
+          a.rel = "noreferrer";
+          a.appendChild(img);
+          document.querySelector("#today").appendChild(a);
         }
       })();
     </script>
