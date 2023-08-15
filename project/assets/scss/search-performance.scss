@@ -104,48 +104,50 @@ main {
 }
 
 // 검색 결과
-#output_section {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  article {
-    width: 200px;
-    height: 325px;
-    margin: 0 1% 20px;
-    
+#performance_search_results {
+  section {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: space-between;
 
-    .posterImg {
+    article {
       width: 200px;
-      height: 250px;
-    }
+      height: 325px;
+      margin: 0 1% 20px;
 
-    .titleA {
-      display: block;
-      width: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
-      font-weight: $fw_b;
-      font-size: 18px;
+      .posterImg {
+        width: 200px;
+        height: 250px;
+      }
 
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+      .titleA {
+        display: block;
+        width: 200px;
 
-    .venueA {
-      font-size: 14px;
-    }
+        font-weight: $fw_b;
+        font-size: 18px;
 
-    .genreSpan {
-      font-size: 14px;
-    }
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
-    .periodSpan {
-      font-size: 14px;
+      .venueA {
+        font-size: 14px;
+      }
+
+      .genreSpan {
+        font-size: 14px;
+      }
+
+      .periodSpan {
+        font-size: 14px;
+      }
     }
   }
 }

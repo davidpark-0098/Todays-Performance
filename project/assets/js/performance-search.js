@@ -1,5 +1,5 @@
 // 공연 검색
-import searchPerformanceOutput from "./search-performance-output.js";
+import performanceSearchResults from "./performance-search-results.js";
 
 // 날짜 기본 값을 오늘로 지정
 document.querySelector("#input_date").valueAsDate = new Date();
@@ -28,9 +28,9 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   if (selectedGenre === null) {
     alert("장르를 선택해 주세요.");
   } else {
-    document.getElementById("output_section").innerHTML = "";
+    document.getElementById("performance_search_results").innerHTML = "";
     // 예외처리를 통과하면, 검색을 시작합니다.
-    searchPerformanceOutput(new Date(selectedDate), selectedGenre, searchedQuery);
+    performanceSearchResults(new Date(selectedDate), selectedGenre, searchedQuery);
     
     // 검색 결과가 없다면, 검색 결과 메시지를 출력합니다.
     // setTimeout(() => {

@@ -7,10 +7,20 @@ import KOPIS_PERFORMANCE_LIST_SERVICE_KEY from "./key.js";
  * @param {String} searchedQuery : 검색어
  * @param {Number} currentPage : 검색한 현재 페이지
  * @param {Number} totalMatchedPerformance : 검색한 모든 페이지의 matchedPerformance 총 개수
+ * @param {Object} performanceSection : 공연 검색 결과 section 태그
  * @returns
  */
-async function searchPerformanceOutput(selectedDate, selectedGenre, searchedQuery, currentPage = 1, totalMatchedPerformance = 0) {
-  document.querySelector("#loading").classList.add("active"); // 로딩창 띄우기
+async function performanceSearchResults(
+  selectedDate,
+  selectedGenre,
+  searchedQuery,
+  currentPage = 1,
+  totalMatchedPerformance = 0,
+  performanceSection = document.createElement("section")
+) {
+  if (totalMatchedPerformance === 0) {
+    document.querySelector("#loading").classList.add("active"); // 로딩창 띄우기
+  }
 
   let json = null; // json data
   let matchedPerformance = 0; // currentPage에서 검색 조건과 일치하는 공연 결과 개수
@@ -95,8 +105,6 @@ async function searchPerformanceOutput(selectedDate, selectedGenre, searchedQuer
     .sort((a, b) => periodStartDate(a) - periodStartDate(b))
     // 정렬된 공연 데이터를 html로 생성
     .some((mp, i) => {
-      document.querySelector("#loading").classList.remove("active"); // 로딩바 닫기
-
       // article태그 생성
       const performanceArticle = document.createElement("article");
 
@@ -145,7 +153,7 @@ async function searchPerformanceOutput(selectedDate, selectedGenre, searchedQuer
       performanceArticle.appendChild(venueA);
       performanceArticle.appendChild(genreSpan);
       performanceArticle.appendChild(periodSpan);
-      document.getElementById("output_section").appendChild(performanceArticle);
+      performanceSection.appendChild(performanceArticle);
 
       // 공연 데이터 카운트
       matchedPerformance++;
@@ -160,11 +168,12 @@ async function searchPerformanceOutput(selectedDate, selectedGenre, searchedQuer
   // currentPage를 1~10 검색합니다
   if (totalMatchedPerformance >= 10 || currentPage === 10) {
     document.querySelector("#loading").classList.remove("active"); // 로딩 제거
+    document.getElementById("performance_search_results").appendChild(performanceSection);
     console.log("검색 결과, 모든 총 공연 데이터는 " + totalMatchedPerformance + "개 입니다.");
     return;
   } else {
-    searchPerformanceOutput(selectedDate, selectedGenre, searchedQuery, currentPage, totalMatchedPerformance);
+    performanceSearchResults(selectedDate, selectedGenre, searchedQuery, currentPage, totalMatchedPerformance, performanceSection);
   }
 }
 
-export default searchPerformanceOutput;
+export default performanceSearchResults;

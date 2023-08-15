@@ -1,5 +1,5 @@
 // 공연장 지도 및 마커 표시
-import searchVenueKakaoMap from "./search-venue-kakao-map.js";
+import searchVenueKakaoMap from "./kakao-map-venue-search.js";
 
 // search performance 공연 검색 결과에서 선택한 공연장을 파라미터로 전달 받습니다
 const urlParams = new URLSearchParams(window.location.search);

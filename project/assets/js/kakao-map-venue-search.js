@@ -3,7 +3,7 @@
  * @param {String} selectedMap : 지역 이름
  * @param {String} searchedQuery : 검색어
  */
-function searchVenueKaKaoMap(selectedMap, searchedQuery) {
+function kakaoMapVenueSearch(selectedMap, searchedQuery) {
   // 지도가 중첩되어 생성되는 것을 방지하기 위해 기존에 생성한 지도는 삭제합니다
   document.getElementById("map").innerHTML = "";
 
@@ -224,4 +224,4 @@ function searchVenueKaKaoMap(selectedMap, searchedQuery) {
   console.log(message);
 }
 
-export default searchVenueKaKaoMap;
+export default kakaoMapVenueSearch;
