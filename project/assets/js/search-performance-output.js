@@ -103,6 +103,7 @@ async function searchPerformanceOutput(selectedDate, selectedGenre, searchedQuer
       // img태그 생성과 공연 포스터 속성 적용
       const posterImg = document.createElement("img");
       posterImg.classList.add("posterImg");
+      // 포스터가 없는 데이터의 경우 "  " 이렇게 표시 되기 때문에, trim() 이후 포스터가 없다면 no-img.jpg를 표시한다
       posterImg.src = mp.referenceIdentifier.trim() || "./assets/img/no-img.jpg";
 
       // a태그 생성과 공연 제목 작성

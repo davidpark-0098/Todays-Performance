@@ -84,25 +84,25 @@ function searchVenueKaKaoMap(selectedMap, searchedQuery) {
     // searchedQuery의 검색어가 있는 경우와 없는 경우에 따라, 검색어 또는 공연장으로 장소를 검색합니다
     // 지역이 전국이며 검색어가 있는 경우
   } else if (selectedMap === "전국" && searchedQuery) {
-    keywordSearch(searchedQuery);
+    keywordSearch(searchedQuery + " " + "공연장");
 
     // 지역과 검색어가 있는 경우
   } else if (selectedMap && searchedQuery) {
-    keywordSearch(selectedMap + " " + searchedQuery);
+    keywordSearch(selectedMap + " " + searchedQuery + " " + "공연장");
 
     // 지역이 있고 검색어가 없는 경우
   } else if (selectedMap && !searchedQuery) {
     keywordSearch(selectedMap + " " + "공연장");
   }
 
-  // 장소 검색 객체를 생성합니다
-  var places = new kakao.maps.services.Places();
-
   /**
    * 지도 키워드 검색
    * @param {String} keyword : 조건에 맞춰 생성된 검색어
    */
   function keywordSearch(keyword) {
+    // 장소 검색 객체를 생성합니다
+    var places = new kakao.maps.services.Places();
+
     // 검색어, 검색결과, 옵션
     places.keywordSearch(keyword, placesSearchCB, { category_group_code: "CT1" });
   }
@@ -140,7 +140,7 @@ function searchVenueKaKaoMap(selectedMap, searchedQuery) {
         data.forEach((v, i) => {
           // 마커를 표시합니다
           displayMarker(v);
-          // bounds의 범위를 
+          // bounds의 범위를
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         });
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
