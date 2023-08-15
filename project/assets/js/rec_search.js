@@ -1,6 +1,7 @@
-import { KOPIS_KEY } from "./key.js";
+import KOPIS_PERFORMANCE_LIST_SERVICE_KEY from "./key.js";
 
-/** 검색
+/** 
+ * 검색
  * ueseData : 유저가 선택한 검색 데이터
  * currentPage : 현재 검색한 API의 page (1페이지당 1000개의 data)
  * targetPage : 원하는 결과의 수를 못채웠을때 API의 몇페이지 까지 검색할지
@@ -15,7 +16,7 @@ async function search(userData, currentPage, targetPage, count, currentImg) {
   try {
     const response = await axios.get("http://api.kcisa.kr/openapi/service/rest/meta16/getkopis01", {
       params: {
-        serviceKey: KOPIS_KEY,
+        serviceKey: "KOPIS_PERFORMANCE_LIST_SERVICE_KEY",
         numOfRows: 1000,
         pageNo: currentPage,
       },

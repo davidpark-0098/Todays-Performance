@@ -1,9 +1,12 @@
-// selectedMap은 확대단계 | 위도 | 경도 | 지역 을 나타냅니다
-function searchVenueKaKaoMap(selectedMapArea, searchedQuery) {
+/**
+ * 지역과 검색어를 통해 카카오맵 API를 활용하여 지도와 마커를 표시합니다
+ * @param {String} selectedMap : 지역 이름
+ * @param {String} searchedQuery : 검색어
+ */
+function searchVenueKaKaoMap(selectedMap, searchedQuery) {
   // 지도가 중첩되어 생성되는 것을 방지하기 위해 기존에 생성한 지도는 삭제합니다
   document.getElementById("map").innerHTML = "";
 
-  // 선택한 지역에 따라 map의 좌표와 확대 레벨을 초기화 합니다
   // 지역: [위도, 경도, 확대 레벨]
   const areaCoordinate = {
     // 공연장은 search-performance 페이지에서 선택한 공연장으로, map의 초기화를 위해 전국 좌표를 지정했습니다
@@ -27,7 +30,8 @@ function searchVenueKaKaoMap(selectedMapArea, searchedQuery) {
     경남: [35.369563, 128.2570135, 10],
     제주: [33.3846216, 126.5534925, 10],
   };
-  const [selectedMapLat, selectedMapLng, selectedMapZoomLevel] = areaCoordinate[selectedMapArea];
+  // 선택한 지역에 따라 map의 좌표와 확대 레벨을 초기화 합니다
+  const [selectedMapLat, selectedMapLng, selectedMapZoomLevel] = areaCoordinate[selectedMap];
 
   /**
    * 지도 표시
@@ -64,41 +68,42 @@ function searchVenueKaKaoMap(selectedMapArea, searchedQuery) {
   var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
   /**
-   * 지도 검색 및 마커 표시
+   * 키워드 검색 조건에 맞는 검색어 생성
    */
-  // 공연검색 페이지의 공연 결과에서, 공연장을 눌렀을 때, 전국 지역으로 해당 공연장을 검색합니다
-
-  // 공연장 검색 페이지에서 직접 검색합니다
-  // 장소 검색 객체를 생성합니다
-  var places = new kakao.maps.services.Places();
-  // 키워드로 장소를 검색합니다
-  // searchedQuery의 검색어가 있는 경우와 없는 경우에 따라, 검색어 또는 공연장으로 장소를 검색합니다
-  // useMapBouds를 사용하면, places의 map에 지정된 좌표 중심을 기준으로 검색합니다
-
   // 지역이 공연장일 경우
-  if (selectedMapArea === "공연장") {
+  if (selectedMap === "공연장") {
+    // 공연검색 페이지의 공연 결과에서, 공연장을 눌렀을 때, 전국 지역으로 해당 공연장을 검색합니다
     keywordSearch(searchedQuery);
 
     // 지역이 전국이며 검색어가 없는 경우
-  } else if (selectedMapArea === "전국" && !searchedQuery) {
+  } else if (selectedMap === "전국" && !searchedQuery) {
     for (let area in areaCoordinate) {
-      keywordSearch(area !== "공연장" || area !== "전국" ? area + " 공연장" : false);
+      keywordSearch(area !== "공연장" || area !== "전국" ? area + " " + "공연장" : false);
     }
 
+    // searchedQuery의 검색어가 있는 경우와 없는 경우에 따라, 검색어 또는 공연장으로 장소를 검색합니다
     // 지역이 전국이며 검색어가 있는 경우
-  } else if (selectedMapArea === "전국" && searchedQuery) {
+  } else if (selectedMap === "전국" && searchedQuery) {
     keywordSearch(searchedQuery);
 
     // 지역과 검색어가 있는 경우
-  } else if (selectedMapArea && searchedQuery) {
-    keywordSearch(selectedMapArea + " " + searchedQuery);
+  } else if (selectedMap && searchedQuery) {
+    keywordSearch(selectedMap + " " + searchedQuery);
 
     // 지역이 있고 검색어가 없는 경우
-  } else if (selectedMapArea && !searchedQuery) {
-    keywordSearch(selectedMapArea + " 공연장");
+  } else if (selectedMap && !searchedQuery) {
+    keywordSearch(selectedMap + " " + "공연장");
   }
 
+  // 장소 검색 객체를 생성합니다
+  var places = new kakao.maps.services.Places();
+
+  /**
+   * 지도 키워드 검색
+   * @param {String} keyword : 조건에 맞춰 생성된 검색어
+   */
   function keywordSearch(keyword) {
+    // 검색어, 검색결과, 옵션
     places.keywordSearch(keyword, placesSearchCB, { category_group_code: "CT1" });
   }
 
@@ -127,14 +132,15 @@ function searchVenueKaKaoMap(selectedMapArea, searchedQuery) {
 
     if (status === kakao.maps.services.Status.OK) {
       // 지역이 전국 또는 각 지역에 따라 다르게 필터링합니다
-      if (selectedMapArea === "공연장") {
+      if (selectedMap === "공연장") {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         var bounds = new kakao.maps.LatLngBounds();
 
         data.forEach((v, i) => {
-          // 데이터를 필터링 후 마커를 표시합니다
+          // 마커를 표시합니다
           displayMarker(v);
+          // bounds의 범위를 
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         });
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다

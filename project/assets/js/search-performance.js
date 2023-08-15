@@ -9,7 +9,7 @@ document.querySelector("#input_date").valueAsDate = new Date();
  * search() 함수를 실행합니다.
  */
 document.getElementById("search_form").addEventListener("submit", (e) => {
-  e.preventDefault();
+  e.preventDefault(); // 양식 기본 기능 제어
 
   const formData = new FormData(e.target); // 폼 데이터 캡처
 
@@ -28,15 +28,16 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   if (selectedGenre === null) {
     alert("장르를 선택해 주세요.");
   } else {
+    document.getElementById("output_section").innerHTML = "";
     // 예외처리를 통과하면, 검색을 시작합니다.
     searchPerformanceOutput(new Date(selectedDate), selectedGenre, searchedQuery);
-
+    
     // 검색 결과가 없다면, 검색 결과 메시지를 출력합니다.
-    setTimeout(() => {
-      if (document.querySelector(".row_container").children.length == 0) {
-        document.querySelector("#loading").classList.remove("active"); // 로딩 중단
-        document.querySelector("#title2").innerHTML = "<a href='#top' id='text_link'>검색 결과가 없습니다.</a>";
-      }
-    }, 5000);
+    // setTimeout(() => {
+    //   if (document.getElementById("output_section").children.length === 0) {
+    //     document.querySelector("#loading").classList.remove("active"); // 로딩 중단
+    //     document.getElementById("output_section").innerHTML = "<a href='#top' id='text_link'>검색 결과가 없습니다.</a>";
+    //   }
+    // }, 5000);
   }
 });

@@ -20,12 +20,10 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   const formData = new FormData(e.target); // 폼 데이터 캡처
 
   // FormData 객체를 사용하여 폼 데이터 접근
-  // 선택한 지역의 구역과 좌표값을 배열로 반환합니다
+  // 선택한 지역 값을 반환합니다
   const selectedMap = formData.get("map");
   // 입력한 검색어의 공백을 제거한 값을 반환합니다
   const searchedQuery = formData.get("searchQuery").trim();
-
-  console.log(selectedMap, searchedQuery);
 
   // 지역 값 검사
   if (selectedMap === undefined || selectedMap === null) {
