@@ -54,9 +54,7 @@
       </section>
 
       <!-- 오늘의 공연 포스터 -->
-      <section id="main_today">
-        <div id="today"></div>
-      </section>
+      <section id="todays_performance"></section>
 
       <!-- 검색 페이지 이동 버튼 -->
       <section id="search_page_btn_sec">
@@ -76,50 +74,7 @@
     <script src="../node_modules/axios/dist/axios.min.js"></script>
     <!-- header footer 생성 -->
     <script src="./assets/js/include.js"></script>
-    <!-- script -->
-    <script type="module">
-      // KOPIS 공연목록 open api json datasets
-      (async () => {
-        let json = null;
-
-        try {
-          /**/
-          // test api json
-          const response = await axios.get("http://localhost:3001/response");
-          json = response.data.body.items.item;
-          /*/
-                // api json
-                const response = await axios.get("http://api.kcisa.kr/openapi/service/rest/meta16/getkopis01", {
-                  params: {
-                    serviceKey: "b5c0289f-a465-4bd4-bb80-37b3b12a1150",
-                    numOfRows: 14,
-                    pageNo: 1,
-                  },
-                  header: {
-                    accept: "application/json",
-                  },
-                });
-                json = response.data.response.body.items.item;
-                /**/
-        } catch (e) {
-          console.error(e);
-          alert("요청을 처리하는데 실패했습니다.");
-          return;
-        }
-
-        // json에서 1페이지 1번 ~ 14번까지 포스터를 img태그로 생성
-        for (let i = 0; i < 14; i++) {
-          const img = document.createElement("img");
-          img.classList.add("hvr-grow");
-          img.setAttribute("src", `${json[i].referenceIdentifier}`);
-          const a = document.createElement("a");
-          a.href = json[i].url;
-          a.target = "_blank";
-          a.rel = "noreferrer";
-          a.appendChild(img);
-          document.querySelector("#today").appendChild(a);
-        }
-      })();
-    </script>
+    <!-- todays- -->
+    <script type="module" src="./assets/js/todays-performance.js"></script>
   </body>
 </html>

@@ -65,18 +65,17 @@ main {
     }
   }
 
-  // 오늘의 공연
-  #main_today {
-    // 오늘의 공연 포스터 (open api json data)
-    #today {
-      display: flex;
-      // 전체 이미지의 상하 padding
-      padding: 20px 0 20px;
+  // 오늘의 공연 포스터
+  #todays_performance {
+    display: flex;
+    margin: 20px 0 20px;
+
+    .performanceArticle {
+      width: 200px;
+      height: 251.19px;
 
       a {
         display: block;
-        width: 200px;
-        height: 251.19px;
 
         img {
           width: 100%;
@@ -84,7 +83,6 @@ main {
 
           padding: 10px;
           box-sizing: border-box;
-
           object-fit: fill;
         }
       }
