@@ -4,9 +4,6 @@
  * @param {String} searchedQuery : 검색어
  */
 function kakaoMapVenueSearch(selectedMap, searchedQuery) {
-  // 지도가 중첩되어 생성되는 것을 방지하기 위해 기존에 생성한 지도는 삭제합니다
-  document.getElementById("map").innerHTML = "";
-
   // 지역: [위도, 경도, 확대 레벨]
   const areaCoordinate = {
     // 공연장은 search-performance 페이지에서 선택한 공연장으로, map의 초기화를 위해 전국 좌표를 지정했습니다

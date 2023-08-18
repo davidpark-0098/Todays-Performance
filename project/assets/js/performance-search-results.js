@@ -1,11 +1,12 @@
 import KOPIS_PERFORMANCE_LIST_SERVICE_KEY from "./key.js";
 
 /**
- * 공연 데이터를 HTML로 생성합니다
+ * 공연 데이터를 HTML태그로 생성합니다
  * @param {Date} selectedDate : 선택한 날짜
  * @param {String} selectedGenre : 선택한 장르
  * @param {String} searchedQuery : 검색어
  * @param {Number} currentPage : 검색한 현재 페이지
+ * @param {Number} maxPageCount : 한번 검색에 탐색 가능한 최대 페이지 수
  * @param {Number} totalMatchedPerformance : 검색한 모든 페이지의 matchedPerformance 총 개수
  * @param {Object} performanceSection : 공연 검색 결과 section 태그
  * @returns
@@ -15,15 +16,14 @@ async function performanceSearchResults(
   selectedGenre,
   searchedQuery,
   currentPage = 1,
+  maxPageCount = 10,
   totalMatchedPerformance = 0,
+  totalMatchedPerformanceLimit = 10,
   performanceSection = document.createElement("section")
 ) {
-  if (totalMatchedPerformance === 0) {
-    document.querySelector("#loading").classList.add("active"); // 로딩창 띄우기
-  }
+  let matchedPerformance = 0; // currentPage에서 검색 조건과 일치하는 공연 결과 개수
 
   let json = null; // json data
-  let matchedPerformance = 0; // currentPage에서 검색 조건과 일치하는 공연 결과 개수
   const numOfRows = 40; // 한 페이지에 불러올 총 데이터 개수
 
   try {
@@ -83,12 +83,11 @@ async function performanceSearchResults(
 
   json
     .filter((p) => {
-      // 가져오는 api 공연 데이터가 2023년도 기준에 미치지 않기 때문에, 모든 공연 시작과 끝 날짜에 4년을 더합니다.
-      const performanceStartDate = periodStartDate(p).setFullYear(periodStartDate(p).getFullYear() + 4);
-
       // 출력한 공연 검색 결과 개수가 40개 미만일때 통과
       if (!(matchedPerformance <= 40)) return false;
 
+      // 가져오는 api 공연 데이터가 2023년도 기준에 미치지 않기 때문에, 모든 공연 시작과 끝 날짜에 4년을 더합니다.
+      const performanceStartDate = periodStartDate(p).setFullYear(periodStartDate(p).getFullYear() + 4);
       // 선택한 날짜가 공연 시작 날짜보다 클때 통과
       if (!(selectedDate <= performanceStartDate)) return false;
 
@@ -104,7 +103,7 @@ async function performanceSearchResults(
     // 검색 조건에 부합하는 데이터에서, 공연 시작 날짜를 기준으로 데이터를 오름차순으로 정렬
     .sort((a, b) => periodStartDate(a) - periodStartDate(b))
     // 정렬된 공연 데이터를 html로 생성
-    .some((mp, i) => {
+    .some((mp) => {
       // article태그 생성
       const performanceArticle = document.createElement("article");
 
@@ -125,7 +124,7 @@ async function performanceSearchResults(
       // a태그 생성과 공연장 작성
       const venueA = document.createElement("a");
       venueA.className = "venueA";
-      venueA.href = `http://127.0.0.1:5500/project/search-venue.html?venue=${mp.spatialCoverage}`;
+      venueA.href = `http://127.0.0.1:5500/project/venue-search.html?venue=${mp.spatialCoverage}`;
       venueA.target = "_blank";
       venueA.rel = "noreferrer";
       venueA.innerHTML = mp.spatialCoverage;
@@ -138,14 +137,8 @@ async function performanceSearchResults(
       // span태그 생성과 기간 작성
       const periodSpan = document.createElement("span");
       periodSpan.className = "periodSpan";
-      /** api가 대부분 과거의 공연정보 이기 때문에 공연 기간에 임시로 3년을 더해서 표현합니다. */
-      periodSpan.innerHTML = mp.temporalCoverage
-        .replaceAll("2022", "2026")
-        .replaceAll("2021", "2025")
-        .replaceAll("2020", "2024")
-        .replaceAll("2019", "2023")
-        .replaceAll("2018", "2022")
-        .replaceAll("2017", "2021");
+      // API 공연 데이터는 최신 데이터가 없어, 공연기간에 4년을 임의로 더하여 표현합니다
+      periodSpan.innerHTML = mp.temporalCoverage.replace(/(2016|2017|2018|2019|2020|2021|2022)/g, (year) => parseInt(year) + 4);
 
       // output_section > artilce > img, a, a, span, span
       performanceArticle.appendChild(posterImg);
@@ -159,20 +152,41 @@ async function performanceSearchResults(
       matchedPerformance++;
       totalMatchedPerformance++;
 
-      if (totalMatchedPerformance >= 10) return true;
+      // 검색된 총 공연 결과가 10개 이상일 경우, 태그 생성을 중단합니다
+      if (totalMatchedPerformance >= totalMatchedPerformanceLimit) return true;
     });
 
-  console.log(currentPage + "번째 페이지의 검색 결과, 일치하는 공연 데이터는" + matchedPerformance + "개 입니다. " + currentPage + "/10");
-  currentPage++;
+  console.log(
+    currentPage + "번째 페이지의 검색 결과, 일치하는 공연 데이터는" + matchedPerformance + "개 입니다. " + currentPage + "/" + maxPageCount + " " + "페이지"
+  );
 
-  // currentPage를 1~10 검색합니다
-  if (totalMatchedPerformance >= 10 || currentPage === 10) {
-    document.querySelector("#loading").classList.remove("active"); // 로딩 제거
+  // currentPage부터 maxPageCount까지 검색합니다
+  // 공연 결과 개수가 30개 이상이거나 페이지가 maxPageCount까지 도달했다면, 검색을 중단합니다
+  if (totalMatchedPerformance >= totalMatchedPerformanceLimit || currentPage >= maxPageCount) {
+    document.querySelector("#loading").classList.remove("active"); // 로딩 중단
     document.getElementById("performance_search_results").appendChild(performanceSection);
-    console.log("검색 결과, 모든 총 공연 데이터는 " + totalMatchedPerformance + "개 입니다.");
-    return;
+
+    // 검색 결과가 없다면, 메시지를 출력합니다.
+    if (totalMatchedPerformance === 0) {
+      document.getElementById("performance_search_results").innerHTML = "<a href='#top' id='no_results'>검색 결과가 없습니다.</a>";
+    } else {
+      document.getElementById("more_btn").style.display = "block";
+      console.log("검색 결과, 모든 총 공연 데이터는 " + totalMatchedPerformance + "개 입니다.");
+    }
+    return [currentPage, totalMatchedPerformance];
   } else {
-    performanceSearchResults(selectedDate, selectedGenre, searchedQuery, currentPage, totalMatchedPerformance, performanceSection);
+    // 다음 페이지를 검색합니다
+    currentPage++;
+    return performanceSearchResults(
+      selectedDate,
+      selectedGenre,
+      searchedQuery,
+      currentPage,
+      maxPageCount,
+      totalMatchedPerformance,
+      totalMatchedPerformanceLimit,
+      performanceSection
+    );
   }
 }
 

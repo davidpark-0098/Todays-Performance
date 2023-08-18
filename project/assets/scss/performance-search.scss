@@ -79,6 +79,67 @@ main {
   #submit_btn {
     cursor: pointer;
   }
+
+  // 검색 결과
+  #performance_search_results {
+    section {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      #no_results {
+        font-size: 20px;
+      }
+
+      article {
+        width: 200px;
+        height: 325px;
+        margin: 0 1% 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .posterImg {
+          width: 200px;
+          height: 250px;
+        }
+
+        .titleA {
+          display: block;
+          width: 200px;
+
+          font-weight: $fw_b;
+          font-size: 18px;
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .venueA {
+          font-size: 14px;
+        }
+
+        .genreSpan {
+          font-size: 14px;
+        }
+
+        .periodSpan {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  #more_btn {
+    display: none;
+    width: 100px;
+    height: 30px;
+    margin: 0 auto;
+    
+  }
 }
 
 // 위로 가기 버튼
@@ -101,55 +162,6 @@ main {
 // 순서 안내 컬러
 .stepColor {
   background-color: $pc_main !important;
-}
-
-// 검색 결과
-#performance_search_results {
-  section {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    article {
-      width: 200px;
-      height: 325px;
-      margin: 0 1% 20px;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      .posterImg {
-        width: 200px;
-        height: 250px;
-      }
-
-      .titleA {
-        display: block;
-        width: 200px;
-
-        font-weight: $fw_b;
-        font-size: 18px;
-
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .venueA {
-        font-size: 14px;
-      }
-
-      .genreSpan {
-        font-size: 14px;
-      }
-
-      .periodSpan {
-        font-size: 14px;
-      }
-    }
-  }
 }
 
 // loading
