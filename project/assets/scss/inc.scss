@@ -35,7 +35,6 @@ header {
           margin-left: -4px;
           padding: 13px;
           transition: all 0.3s ease;
-          
 
           &:hover {
             color: #2a3037;
@@ -90,10 +89,26 @@ footer {
   background-color: $bg_footer;
   color: rgba(255, 255, 255, 0.5);
 
+  display: flex;
+  justify-content: space-evenly;
+
   // copyright
   address {
     font-size: 10px;
-    text-align: center;
     line-height: 25px;
+  }
+
+  // icons8
+  p {
+    a {
+      font-size: 10px;
+      line-height: 25px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    span {
+      font-size: 10px;
+      line-height: 25px;
+    }
   }
 }

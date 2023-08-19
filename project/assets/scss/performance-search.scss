@@ -78,6 +78,13 @@ main {
   // 검색버튼
   #submit_btn {
     cursor: pointer;
+    i {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
   }
 
   // 검색 결과
@@ -104,6 +111,22 @@ main {
         .posterImg {
           width: 200px;
           height: 250px;
+        }
+
+        .noImgDiv {
+          width: 200px;
+          height: 250px;
+          border: 1px solid $fc_sub;
+          box-sizing: border-box;
+
+          .noImg {
+            display: block;
+            font-size: 40px;
+            line-height: 250px;
+
+            color: $fc_sub;
+            text-align: center;
+          }
         }
 
         .titleA {
@@ -134,11 +157,15 @@ main {
   }
 
   #more_btn {
-    display: none;
     width: 100px;
     height: 30px;
     margin: 0 auto;
-    
+    display: none;
+
+    #more {
+      font-size: 25px;
+      color: #2a3037;
+    }
   }
 }
 
@@ -165,18 +192,15 @@ main {
 }
 
 // loading
-#loading {
-  width: 100px;
-  height: 100px;
-  background: url(../img/loading.gif) no-repeat center/cover;
-  position: absolute;
-  left: 50%;
-  top: 70%;
-  transform: translate(-50%, -50%);
-  z-index: 99999999;
+#loading_icon {
+  width: 14px;
+  height: 14px;
   display: none;
-}
+  background: url(../img/loading-icon.gif) no-repeat center/cover;
 
-#loading.active {
-  display: block;
+  z-index: 1000;
+
+  &.active {
+    display: block;
+  }
 }

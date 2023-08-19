@@ -14,24 +14,24 @@
 
 // 기본 폰트, 배경 색상, 아이콘 공통 적용
 body {
-  overflow-x: hidden;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
+
   font-family: "Pretendard";
   font-weight: $fw_r;
   font-style: normal;
+
   color: $fc_main;
   background-color: $bg_main;
+
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  /* // 구글 가변 아이콘 설정
-    .material-symbols-outlined {
-        font-variation-settings:
-        'FILL' 0,
-        'wght' 700,
-        'GRAD' 200,
-        'opsz' 48
-    } */
+
+  overflow-x: hidden;
+
+  main {
+    flex-grow: 1;
+  }
 }
 
 // 그림자
@@ -72,11 +72,6 @@ h4 {
 h5 {
   font-size: $h5;
   line-height: 22px;
-}
-p {
-  font-size: $fs_m;
-  margin: 15px 0;
-  line-height: 23px;
 }
 b {
   font-weight: $fw_b;

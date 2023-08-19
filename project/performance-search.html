@@ -42,9 +42,6 @@
     <!-- header -->
     <div data-include="./inc/header.html"></div>
 
-    <!-- loading -->
-    <div id="loading"></div>
-
     <!-- main -->
     <main>
       <div id="search_title_div">
@@ -79,14 +76,16 @@
 
           <!-- 검색 버튼 -->
           <button type="submit" id="submit_btn">
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i id="search_icon" class="fa-solid fa-magnifying-glass active"></i>
+            <!-- loading -->
+            <div id="loading_icon"></div>
           </button>
         </fieldset>
       </form>
 
       <!-- 결과 출력 -->
       <div id="performance_search_results"></div>
-      <button type="button" id="more_btn">더보기</button>
+      <button type="button" id="more_btn"><i id="more" class="fa-solid fa-ellipsis"></i></button>
     </main>
 
     <!-- footer -->
