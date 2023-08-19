@@ -107,11 +107,27 @@ async function performanceSearchResults(
       // article태그 생성
       const performanceArticle = document.createElement("article");
 
-      // img태그 생성과 공연 포스터 속성 적용
-      const posterImg = document.createElement("img");
-      posterImg.classList.add("posterImg");
-      // 포스터가 없는 데이터의 경우 "  " 이렇게 표시 되기 때문에, trim() 이후 포스터가 없다면 no-img.jpg를 표시한다
-      posterImg.src = mp.referenceIdentifier.trim() || "./assets/img/no-img.jpg";
+      // 공연 포스터 태그 변수
+      let posterImg;
+      // 공연 포스터 이미지가 있는 경우
+      if (mp.referenceIdentifier.trim()) {
+        // img태그 생성과 공연 포스터 속성 적용
+        posterImg = document.createElement("img");
+        posterImg.classList.add("posterImg");
+
+        // 포스터가 없는 데이터의 경우 "  " 이렇게 표시 되기 때문에, trim() 이후 포스터가 없다면 no-img.jpg를 표시한다
+        posterImg.src = mp.referenceIdentifier;
+
+        // 공연 포스터 이미지가 없는 경우 Icon으로 대체합니다
+      } else {
+        posterImg = document.createElement("div");
+        posterImg.classList.add("noImgDiv");
+
+        const noImg = document.createElement("i");
+        noImg.className = "fa-solid fa-image noImg";
+
+        posterImg.appendChild(noImg);
+      }
 
       // a태그 생성과 공연 제목 작성
       const titleA = document.createElement("a");
@@ -163,7 +179,10 @@ async function performanceSearchResults(
   // currentPage부터 maxPageCount까지 검색합니다
   // 공연 결과 개수가 30개 이상이거나 페이지가 maxPageCount까지 도달했다면, 검색을 중단합니다
   if (totalMatchedPerformance >= totalMatchedPerformanceLimit || currentPage >= maxPageCount) {
-    document.querySelector("#loading").classList.remove("active"); // 로딩 중단
+    // 로딩 중단과 검색 아이콘 표시
+    document.querySelector("#loading_icon").classList.remove("active");
+    document.querySelector("#search_icon").classList.add("active");
+
     document.getElementById("performance_search_results").appendChild(performanceSection);
 
     // 검색 결과가 없다면, 메시지를 출력합니다.
