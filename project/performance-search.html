@@ -44,48 +44,54 @@
 
     <!-- main -->
     <main>
-      <div id="search_title_div">
-        <!-- page shortcut -->
-        <a href="./form.html"><i class="fa-solid fa-chevron-left"></i>공연 추천 받기</a>
-        <!-- Main Title -->
-        <h1 id="search_title">공연 검색</h1>
-        <!-- page shortcut -->
-        <a href="./venue-search.html">공연장 찾아보기<i class="fa-solid fa-chevron-right"></i></a>
+      <div id="nav">
+        <div id="search_title_div">
+          <!-- page shortcut -->
+          <a href="./form.html"><i class="fa-solid fa-chevron-left"></i>공연 추천 받기</a>
+          <!-- Main Title -->
+          <h1 id="search_title">공연 검색</h1>
+          <!-- page shortcut -->
+          <a href="./venue-search.html">공연장 찾아보기<i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+
+        <!-- 공연 상세 검색 양식 -->
+        <form action="#" id="search_form" name="searchForm">
+          <fieldset class="search_fieldset">
+            <!-- 날짜 선택 -->
+            <input type="date" id="input_date" name="date" data-placeholder="날짜를 선택하세요." required aria-required="true" />
+
+            <!-- 장르 선택 -->
+            <select id="select_genre" name="genre">
+              <option class="genreOptions" disabled selected>장르를 선택하세요</option>
+              <option class="genreOptions" data-genre="전체" value="전체">전체</option>
+              <option class="genreOptions" data-genre="무용" value="무용">무용</option>
+              <option class="genreOptions" data-genre="뮤지컬" value="뮤지컬">뮤지컬</option>
+              <option class="genreOptions" data-genre="연극" value="연극">연극</option>
+              <option class="genreOptions" data-genre="오페라" value="오페라">오페라</option>
+              <option class="genreOptions choiced" data-genre="콘서트" value="콘서트">콘서트</option>
+              <option class="genreOptions" data-genre="클래식" value="클래식">클래식</option>
+            </select>
+
+            <!-- 검색어 -->
+            <input type="search" id="input_search_query" name="searchQuery" placeholder="공연 제목 또는 공연장 이름을 입력하세요" />
+
+            <!-- 검색 버튼 -->
+            <button type="submit" id="submit_btn">
+              <i id="search_icon" class="fa-solid fa-magnifying-glass active"></i>
+              <!-- loading -->
+              <div id="loading_icon_on_submit_btn"></div>
+            </button>
+          </fieldset>
+        </form>
       </div>
-
-      <!-- 공연 상세 검색 양식 -->
-      <form action="#" id="search_form" name="searchForm">
-        <fieldset class="search_fieldset">
-          <!-- 날짜 선택 -->
-          <input type="date" id="input_date" name="date" data-placeholder="날짜를 선택하세요." required aria-required="true" />
-
-          <!-- 장르 선택 -->
-          <select id="select_genre" name="genre">
-            <option class="genreOptions" disabled selected>장르를 선택하세요</option>
-            <option class="genreOptions" data-genre="전체" value="전체">전체</option>
-            <option class="genreOptions" data-genre="무용" value="무용">무용</option>
-            <option class="genreOptions" data-genre="뮤지컬" value="뮤지컬">뮤지컬</option>
-            <option class="genreOptions" data-genre="연극" value="연극">연극</option>
-            <option class="genreOptions" data-genre="오페라" value="오페라">오페라</option>
-            <option class="genreOptions choiced" data-genre="콘서트" value="콘서트">콘서트</option>
-            <option class="genreOptions" data-genre="클래식" value="클래식">클래식</option>
-          </select>
-
-          <!-- 검색어 -->
-          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연 제목 또는 공연장 이름을 입력하세요" />
-
-          <!-- 검색 버튼 -->
-          <button type="submit" id="submit_btn">
-            <i id="search_icon" class="fa-solid fa-magnifying-glass active"></i>
-            <!-- loading -->
-            <div id="loading_icon"></div>
-          </button>
-        </fieldset>
-      </form>
 
       <!-- 결과 출력 -->
       <div id="performance_search_results"></div>
-      <button type="button" id="more_btn"><i id="more" class="fa-solid fa-ellipsis"></i></button>
+      <button type="button" id="more_btn">
+        <i id="more_icon" class="fa-solid fa-ellipsis active"></i>
+        <!-- loading -->
+        <div id="loading_icon_on_more_btn"></div>
+      </button>
     </main>
 
     <!-- footer -->

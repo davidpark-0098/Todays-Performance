@@ -18,79 +18,119 @@
 
 // 공연 상세 검색, 지도, 검색 결과
 main {
-  width: 1200px;
+  width: 100%;
   min-width: 500px;
-  margin: 0 auto;
 
-  #search_title_div {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-
-    #search_title {
-      text-align: center;
-      font-weight: $fw_b;
-      color: $fc_main;
-      margin: 0 15px;
-    }
-
-    a {
-      font-size: 16px;
-      font-weight: $fw_b;
-      color: $fc_sub;
-      opacity: 0.5;
-      transition: 0.3s all;
-
-      &:hover {
-        color: $fc_main;
-        opacity: 1;
-      }
-
-      i {
-        font-size: 14.5px;
-
-        &:first-child {
-          margin-right: 3px;
-        }
-        &:last-child {
-          margin-left: 3px;
-        }
-      }
-    }
-  }
-
-  // 공연 상세 검색
-  #search_form {
+  #nav {
     width: 100%;
-    margin-bottom: 15px;
+    height: 151px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $line;
 
-    .search_fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    z-index: 100;
+
+    background-color: white;
+
+    #search_title_div {
       width: 100%;
+
       display: flex;
       justify-content: center;
+      align-items: baseline;
 
-      #input_search_query {
-        width: 250px;
+      #search_title {
+        text-align: center;
+        font-weight: $fw_b;
+        color: $fc_main;
+        margin: 0 15px;
+      }
+
+      a {
+        font-size: 16px;
+        font-weight: $fw_b;
+        color: $fc_sub;
+        opacity: 0.5;
+        transition: 0.3s all;
+
+        &:hover {
+          color: $fc_main;
+          opacity: 1;
+        }
+
+        i {
+          font-size: 14.5px;
+
+          &:first-child {
+            margin-right: 3px;
+          }
+          &:last-child {
+            margin-left: 3px;
+          }
+        }
       }
     }
-  }
 
-  // 검색버튼
-  #submit_btn {
-    cursor: pointer;
-    i {
-      display: none;
+    // 공연 상세 검색
+    #search_form {
+      width: 100%;
 
-      &.active {
-        display: block;
+      .search_fieldset {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        #input_search_query {
+          width: 250px;
+        }
+
+        // 검색버튼
+        #submit_btn {
+          cursor: pointer;
+
+          #search_icon {
+            display: none;
+
+            &.active {
+              display: block;
+            }
+          }
+
+          // loading
+          #loading_icon_on_submit_btn {
+            width: 14px;
+            height: 14px;
+            display: none;
+            background: url(../img/loading-icon.gif) no-repeat center/cover;
+
+            z-index: 1000;
+
+            &.active {
+              display: block;
+            }
+          }
+        }
       }
     }
   }
 
   // 검색 결과
   #performance_search_results {
+    width: 100%;
+    margin-top: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     section {
-      width: 100%;
+      width: 1200px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -160,47 +200,42 @@ main {
     width: 100px;
     height: 30px;
     margin: 0 auto;
-    display: none;
 
-    #more {
+    display: none;
+    position: relative;
+
+    #more_icon {
       font-size: 25px;
       color: #2a3037;
+
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      &.active {
+        display: block;
+      }
     }
-  }
-}
 
-// 위로 가기 버튼
-#going_up {
-  width: 10vw;
-  font-size: 3em;
-  text-align: center;
-  color: gray;
-  z-index: 999;
-  position: fixed;
-  bottom: 50px;
-  right: 0;
-  &:hover {
-    color: $pc_main;
-  }
-  opacity: 0;
-  transition: 1s;
-}
+    // loading
+    #loading_icon_on_more_btn {
+      width: 24px;
+      height: 24px;
+      display: none;
 
-// 순서 안내 컬러
-.stepColor {
-  background-color: $pc_main !important;
-}
+      background: url(../img/loading-icon.gif) no-repeat center/cover;
+      z-index: 1000;
 
-// loading
-#loading_icon {
-  width: 14px;
-  height: 14px;
-  display: none;
-  background: url(../img/loading-icon.gif) no-repeat center/cover;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
-  z-index: 1000;
-
-  &.active {
-    display: block;
+      &.active {
+        display: block;
+      }
+    }
   }
 }

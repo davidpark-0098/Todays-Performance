@@ -19,14 +19,16 @@
 // header와 footer 사이 main
 main {
   width: 100%;
-  height: auto;
+
   // 텍스트 정렬
   text-align: center;
+
   // 블록 정렬
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  
   // main search icon 애니메이션
   #search {
     font-size: 24px;
