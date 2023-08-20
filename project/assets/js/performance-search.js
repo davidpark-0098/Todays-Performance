@@ -1,6 +1,6 @@
 // 공연 검색
 import performanceSearchResults from "./performance-search-results.js";
-// document.querySelector("#loading_icon").classList.add("active"); // 로딩 시작
+import loading from "./loading.js";
 
 // 날짜 기본 값을 오늘로 지정
 document.querySelector("#input_date").valueAsDate = new Date();
@@ -39,9 +39,8 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
     // 기존 검색 결과 내용을 삭제합니다
     document.getElementById("performance_search_results").innerHTML = "";
 
-    // 로딩 시작과 검색 아이콘 표시
-    document.querySelector("#search_icon").classList.remove("active");
-    document.querySelector("#loading_icon").classList.add("active");
+    // 로딩 시작
+    loading("start");
 
     // 예외처리를 통과하면, 검색을 시작합니다
     performanceSearch();
@@ -52,7 +51,8 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
  * 더보기 클릭시, 기존 검색 데이터를 가지고 performanceSearch()를 실행합니다
  */
 document.getElementById("more_btn").addEventListener("click", () => {
-  document.querySelector("#loading_icon").classList.add("active"); // 로딩 시작
+  // 로딩 시작
+  loading("start");
   console.log(new Date(selectedDate), selectedGenre, searchedQuery, currentPage, maxPageCount, totalMatchedPerformance, totalMatchedPerformanceLimit);
   performanceSearch();
 });

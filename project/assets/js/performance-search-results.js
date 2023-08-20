@@ -1,4 +1,5 @@
 import KOPIS_PERFORMANCE_LIST_SERVICE_KEY from "./key.js";
+import loading from "./loading.js";
 
 /**
  * 공연 데이터를 HTML태그로 생성합니다
@@ -179,9 +180,8 @@ async function performanceSearchResults(
   // currentPage부터 maxPageCount까지 검색합니다
   // 공연 결과 개수가 30개 이상이거나 페이지가 maxPageCount까지 도달했다면, 검색을 중단합니다
   if (totalMatchedPerformance >= totalMatchedPerformanceLimit || currentPage >= maxPageCount) {
-    // 로딩 중단과 검색 아이콘 표시
-    document.querySelector("#loading_icon").classList.remove("active");
-    document.querySelector("#search_icon").classList.add("active");
+    // 로딩 중단
+    loading("end");
 
     document.getElementById("performance_search_results").appendChild(performanceSection);
 
