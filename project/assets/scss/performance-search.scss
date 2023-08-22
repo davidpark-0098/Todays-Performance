@@ -129,24 +129,91 @@ main {
     flex-direction: column;
     align-items: center;
 
-    section {
+    #performance_search_results_skeleton {
       width: 1200px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      gap: 20px 50px;
+
+      .articleSkeleton {
+        width: 200px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .posterSkeleton {
+          width: 200px;
+          height: 250px;
+
+          background-color: #dcdee1;
+          opacity: 0.7;
+          animation: skeleton 0.8s ease-in-out infinite alternate;
+        }
+
+        .titleSkeleton {
+          width: 200px;
+          height: 18px;
+
+          background-color: #dcdee1;
+          opacity: 0.7;
+          animation: skeleton 0.8s ease-in-out infinite alternate;
+        }
+
+        .venueSkeleton {
+          width: 200px;
+          height: 14px;
+
+          background-color: #dcdee1;
+          opacity: 0.7;
+          animation: skeleton 0.8s ease-in-out infinite alternate;
+        }
+
+        .genreSkeleton {
+          width: 200px;
+          height: 14px;
+
+          background-color: #dcdee1;
+          opacity: 0.7;
+          animation: skeleton 0.8s ease-in-out infinite alternate;
+        }
+
+        .periodSkeleton {
+          width: 200px;
+          height: 14px;
+
+          background-color: #dcdee1;
+          opacity: 0.7;
+          animation: skeleton 0.8s ease-in-out infinite alternate;
+        }
+      }
+    }
+    @keyframes skeleton {
+      0% {
+        opacity: 0.7;
+      }
+      100% {
+        opacity: 0.2;
+      }
+    }
+
+    #performanceSection {
+      width: 1200px;
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 50px;
 
       #no_results {
         font-size: 20px;
       }
 
-      article {
+      #performanceArticle {
         width: 200px;
-        height: 325px;
-        margin: 0 1% 20px;
 
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        gap: 4px;
 
         .posterImg {
           width: 200px;
