@@ -9,7 +9,7 @@ import loading from "./loading.js";
  * @param {Number} currentPage : 검색한 현재 페이지
  * @param {Number} maxPageCount : 한번 검색에 탐색 가능한 최대 페이지 수
  * @param {Number} totalMatchedPerformance : 검색한 모든 페이지의 matchedPerformance 총 개수
- * @param {Object} performanceSection : 공연 검색 결과 section 태그
+ * @param {Object} fragment : 공연 검색 결과인 article태그(performanceArticle)를 저장하는 가상 요소
  * @returns
  */
 async function performanceSearchResults(
@@ -20,7 +20,7 @@ async function performanceSearchResults(
   maxPageCount = 10,
   totalMatchedPerformance = 0,
   totalMatchedPerformanceLimit = 10,
-  performanceSection = document.createElement("section")
+  fragment = document.createDocumentFragment()
 ) {
   let matchedPerformance = 0; // currentPage에서 검색 조건과 일치하는 공연 결과 개수
 
@@ -107,27 +107,28 @@ async function performanceSearchResults(
     .some((mp) => {
       // article태그 생성
       const performanceArticle = document.createElement("article");
+      performanceArticle.setAttribute("id", "performanceArticle");
 
       // 공연 포스터 태그 변수
-      let posterImg;
+      let poster;
       // 공연 포스터 이미지가 있는 경우
       if (mp.referenceIdentifier.trim()) {
         // img태그 생성과 공연 포스터 속성 적용
-        posterImg = document.createElement("img");
-        posterImg.classList.add("posterImg");
+        poster = document.createElement("img");
+        poster.classList.add("posterImg");
 
         // 포스터가 없는 데이터의 경우 "  " 이렇게 표시 되기 때문에, trim() 이후 포스터가 없다면 no-img.jpg를 표시한다
-        posterImg.src = mp.referenceIdentifier;
+        poster.src = mp.referenceIdentifier;
 
         // 공연 포스터 이미지가 없는 경우 Icon으로 대체합니다
       } else {
-        posterImg = document.createElement("div");
-        posterImg.classList.add("noImgDiv");
+        poster = document.createElement("div");
+        poster.classList.add("noImgDiv");
 
         const noImg = document.createElement("i");
         noImg.className = "fa-solid fa-image noImg";
 
-        posterImg.appendChild(noImg);
+        poster.appendChild(noImg);
       }
 
       // a태그 생성과 공연 제목 작성
@@ -158,12 +159,12 @@ async function performanceSearchResults(
       periodSpan.innerHTML = mp.temporalCoverage.replace(/(2016|2017|2018|2019|2020|2021|2022)/g, (year) => parseInt(year) + 4);
 
       // output_section > artilce > img, a, a, span, span
-      performanceArticle.appendChild(posterImg);
+      performanceArticle.appendChild(poster);
       performanceArticle.appendChild(titleA);
       performanceArticle.appendChild(venueA);
       performanceArticle.appendChild(genreSpan);
       performanceArticle.appendChild(periodSpan);
-      performanceSection.appendChild(performanceArticle);
+      fragment.appendChild(performanceArticle);
 
       // 공연 데이터 카운트
       matchedPerformance++;
@@ -183,7 +184,20 @@ async function performanceSearchResults(
     // 로딩 중단
     loading("end");
 
-    document.getElementById("performance_search_results").appendChild(performanceSection);
+    // performanceSection태그가 있다면 (더보기 버튼을 통한 공연을 다시 검색할 경우) fragment를 자식요소로 넣습니다
+    if (document.getElementById("performanceSection")) {
+      // fragment를 performance_search_results태그의 자식요소로 넣습니다
+      document.getElementById("performanceSection").appendChild(fragment);
+
+      // 첫 공연 검색시, performanceSection태그를 생성하고 fragment를 자식요소로 넣습니다
+    } else {
+      const performanceSection = document.createElement("section");
+      performanceSection.setAttribute("id", "performanceSection");
+      performanceSection.appendChild(fragment);
+
+      // performanceSection태그를 performance_search_results태그의 자식요소로 넣습니다
+      document.getElementById("performance_search_results").appendChild(performanceSection);
+    }
 
     // 검색 결과가 없다면, 메시지를 출력합니다.
     if (totalMatchedPerformance === 0) {
@@ -204,7 +218,8 @@ async function performanceSearchResults(
       maxPageCount,
       totalMatchedPerformance,
       totalMatchedPerformanceLimit,
-      performanceSection
+
+      fragment
     );
   }
 }
