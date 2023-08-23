@@ -12,10 +12,6 @@ header {
   background-color: white;
   border-bottom: 1px solid $line;
 
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-
   #header_section {
     max-width: 800px;
     height: 100%;
@@ -96,8 +92,6 @@ footer {
 
   display: flex;
   justify-content: space-evenly;
-
-  z-index: 1000;
 
   // copyright
   address {

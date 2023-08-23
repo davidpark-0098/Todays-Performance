@@ -45,55 +45,59 @@
 
     <!-- main -->
     <main>
-      <div id="search_title_div">
-        <!-- page shortcut -->
-        <a href="./performance-search.html"><i class="fa-solid fa-chevron-left"></i>공연 찾아보기</a>
-        <!-- Main Title -->
-        <h1 id="search_title">공연장 검색</h1>
-        <!-- page shortcut -->
-        <a href="./form.html">공연 추천 받기<i class="fa-solid fa-chevron-right"></i></a>
+      <div id="searchDiv">
+        <nav>
+          <!-- page shortcut -->
+          <a href="./performance-search.html"><i class="fa-solid fa-chevron-left"></i>공연 찾아보기</a>
+          <!-- Main Title -->
+          <h1 id="search_title">공연장 검색</h1>
+          <!-- page shortcut -->
+          <a href="./form.html">공연 추천 받기<i class="fa-solid fa-chevron-right"></i></a>
+        </nav>
+
+        <!-- 공연 상세 검색 양식 -->
+        <form action="#" id="search_form" name="searchForm">
+          <fieldset class="search_fieldset">
+            <!-- 지역 선택 -->
+            <select id="select_map" name="map" onchange="this.value">
+              <option class="mapOptions" disabled selected>지역을 선택하세요</option>
+              <option class="mapOptions" value="전국">전국</option>
+              <option class="mapOptions" value="서울">서울특별시</option>
+              <option class="mapOptions" value="부산">부산광역시</option>
+              <option class="mapOptions" value="대구">대구광역시</option>
+              <option class="mapOptions" value="인천">인천광역시</option>
+              <option class="mapOptions" value="광주">광주광역시</option>
+              <option class="mapOptions" value="대전">대전광역시</option>
+              <option class="mapOptions" value="울산">울산광역시</option>
+              <option class="mapOptions" value="세종">세종특별자치시</option>
+              <option class="mapOptions" value="경기">경기도</option>
+              <option class="mapOptions" value="강원">강원특별자치도</option>
+              <option class="mapOptions" value="충북">충청북도</option>
+              <option class="mapOptions" value="충남">충청남도</option>
+              <option class="mapOptions" value="전북">전라북도</option>
+              <option class="mapOptions" value="전남">전라남도</option>
+              <option class="mapOptions" value="경북">경상북도</option>
+              <option class="mapOptions" value="경남">경상남도</option>
+              <option class="mapOptions" value="제주">제주특별자치도</option>
+            </select>
+
+            <!-- 검색어 -->
+            <input type="search" id="input_search_query" name="searchQuery" placeholder="공연장 이름을 입력하세요" />
+
+            <!-- 검색 버튼 -->
+            <button type="submit" id="submit_btn">
+              <i id="search_icon" class="fa-solid fa-magnifying-glass active"></i>
+              <!-- loading -->
+              <div id="loading_icon_on_submit_btn"></div>
+            </button>
+          </fieldset>
+        </form>
       </div>
 
-      <!-- 공연 상세 검색 양식 -->
-      <form action="#" id="search_form" name="searchForm">
-        <fieldset class="search_fieldset">
-          <!-- 지역 선택 -->
-          <select id="select_map" name="map" onchange="this.value">
-            <option class="mapOptions" disabled selected>지역을 선택하세요</option>
-            <option class="mapOptions" value="전국">전국</option>
-            <option class="mapOptions" value="서울">서울특별시</option>
-            <option class="mapOptions" value="부산">부산광역시</option>
-            <option class="mapOptions" value="대구">대구광역시</option>
-            <option class="mapOptions" value="인천">인천광역시</option>
-            <option class="mapOptions" value="광주">광주광역시</option>
-            <option class="mapOptions" value="대전">대전광역시</option>
-            <option class="mapOptions" value="울산">울산광역시</option>
-            <option class="mapOptions" value="세종">세종특별자치시</option>
-            <option class="mapOptions" value="경기">경기도</option>
-            <option class="mapOptions" value="강원">강원특별자치도</option>
-            <option class="mapOptions" value="충북">충청북도</option>
-            <option class="mapOptions" value="충남">충청남도</option>
-            <option class="mapOptions" value="전북">전라북도</option>
-            <option class="mapOptions" value="전남">전라남도</option>
-            <option class="mapOptions" value="경북">경상북도</option>
-            <option class="mapOptions" value="경남">경상남도</option>
-            <option class="mapOptions" value="제주">제주특별자치도</option>
-          </select>
-
-          <!-- 검색어 -->
-          <input type="search" id="input_search_query" name="searchQuery" placeholder="공연장 이름을 입력하세요" />
-
-          <!-- 검색 버튼 -->
-          <button type="submit" id="submit_btn">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </fieldset>
-      </form>
-
       <!-- 지도 표시 -->
-      <div class="map-container">
-        <div id="map">
-          <div id="map_skeleton"><a href="https://map.kakao.com/" target="_blank" rel="noreferrer">KAKAO MAP</a></div>
+      <div id="map">
+        <div id="map_skeleton">
+          <a href="https://map.kakao.com/" target="_blank" rel="noreferrer">KAKAO MAP</a>
         </div>
       </div>
     </main>

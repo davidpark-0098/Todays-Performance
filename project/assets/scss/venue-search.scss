@@ -18,266 +18,175 @@
 
 // 공연 상세 검색, 지도, 검색 결과
 main {
-  width: 1000px;
+  width: 100%;
   min-width: 500px;
-  margin-top: 200px;
 
-  #search_title_div {
+  #searchDiv {
+    width: 100%;
+    height: 80px;
+    padding-bottom: 20px;
+
     display: flex;
-    justify-content: center;
-    align-items: baseline;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
 
-    #search_title {
-      text-align: center;
-      font-weight: $fw_b;
-      color: $fc_main;
-      margin: 0 15px;
-    }
+    border-bottom: 1px solid $line;
+    background-color: white;
 
-    a {
-      font-size: 16px;
-      font-weight: $fw_b;
-      color: $fc_sub;
-      opacity: 0.5;
-      transition: 0.3s all;
+    nav {
+      width: 100%;
 
-      &:hover {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+
+      #search_title {
+        text-align: center;
+        font-weight: $fw_b;
         color: $fc_main;
-        opacity: 1;
+        margin: 0 15px;
       }
 
-      i {
-        font-size: 14.5px;
+      a {
+        font-size: 16px;
+        font-weight: $fw_b;
+        color: $fc_sub;
+        opacity: 0.5;
+        transition: 0.3s all;
 
-        &:first-child {
-          margin-right: 3px;
+        &:hover {
+          color: $fc_main;
+          opacity: 1;
         }
-        &:last-child {
-          margin-left: 3px;
+
+        i {
+          font-size: 14.5px;
+
+          &:first-child {
+            margin-right: 3px;
+          }
+          &:last-child {
+            margin-left: 3px;
+          }
+        }
+      }
+    }
+
+    // 공연 상세 검색
+    #search_form {
+      width: 100%;
+
+      .search_fieldset {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        #input_search_query {
+          width: 200px;
+        }
+      }
+    }
+
+    // 검색버튼
+    #submit_btn {
+      cursor: pointer;
+
+      #search_icon {
+        display: none;
+
+        &.active {
+          display: block;
+        }
+      }
+
+      // loading
+      #loading_icon_on_submit_btn {
+        width: 14px;
+        height: 14px;
+        display: none;
+        background: url(../img/loading-icon.gif) no-repeat center/cover;
+
+        z-index: 1000;
+
+        &.active {
+          display: block;
         }
       }
     }
   }
 
-  // 공연 상세 검색
-  #search_form {
+  // 카카오맵 지도
+  #map {
     width: 100%;
-    margin-bottom: 15px;
+    height: calc(100vh - 197px);
+    position: relative;
 
-    .search_fieldset {
-      width: 100%;
+    div {
+      div {
+        // 인포윈도우 선택
+        div:nth-child(6) > div {
+          width: auto !important;
+          height: auto !important;
+          border: none !important;
+          background: none !important;
+
+          // 인포윈도우 말풍선 표시 ⌄
+          & > div:first-child {
+            z-index: 5 !important;
+          }
+
+          // 인포윈도우의 말풍선 박스 ◻︎
+          & > div:last-child {
+            left: 23px !important;
+            top: 2px !important;
+            border: 1px solid rgb(118, 129, 168) !important;
+            background: rgb(255, 255, 255) !important;
+          }
+        }
+      }
+    }
+
+    // 마커의 인포윈도우 스타일
+    .markerDiv {
+      width: 100px;
+      height: 100%;
       display: flex;
       justify-content: center;
 
-      #input_search_query {
-        width: 200px;
-      }
-    }
-  }
+      .markerLink {
+        display: block;
+        text-align: center;
+        padding: 5px;
 
-  // 검색버튼
-  #submit_btn {
-    cursor: pointer;
-  }
-
-  // 카카오맵 컨테이너
-  .map-container {
-    // 지도
-    #map {
-      width: 100%;
-      height: 500px;
-
-      div {
-        div {
-          // 인포윈도우 선택
-          div:nth-child(6) > div {
-            width: auto !important;
-            height: auto !important;
-            border: none !important;
-            background: none !important;
-
-            // 인포윈도우 말풍선 표시 ⌄
-            & > div:first-child {
-              z-index: 5 !important;
-            }
-
-            // 인포윈도우의 말풍선 박스 ◻︎
-            & > div:last-child {
-              left: 23px !important;
-              top: 2px !important;
-              border: 1px solid rgb(118, 129, 168) !important;
-              background: rgb(255, 255, 255) !important;
-            }
-          }
+        .markerTitle {
+          font-size: 12px;
         }
       }
+    }
 
-      // 마커의 인포윈도우 스타일
-      .markerDiv {
-        width: 100px;
+    // 지도 skeleton screen
+    #map_skeleton {
+      width: 100%;
+      height: inherit;
+
+      background-image: linear-gradient(#dcdee1 70%, transparent 100%);
+      opacity: 0.3;
+
+      a {
+        display: block;
+        width: 100%;
         height: 100%;
+
         display: flex;
         justify-content: center;
-        .markerLink {
-          display: block;
-          text-align: center;
-          padding: 5px;
-          .markerTitle {
-            font-size: 12px;
-          }
-        }
-      }
+        align-items: center;
 
-      // 지도 생성 전 영역 표시
-      #map_skeleton {
-        width: 100%;
-        height: 500px;
-
-        background-color: #dcdee1;
-        opacity: 0.7;
-        animation: skeleton 0.8s ease-in-out infinite alternate;
-        // animation: blink 1s ease-in-out 2s infinite alternate;
-        // name / duration / timing-function / delay / iteration-count / direction
-
-        text-align: center;
-        line-height: 500px;
-
-        a {
-          display: block;
-          width: 100%;
-          height: 100%;
-
-          font-size: 16px;
-          font-weight: $fw_b;
-          color: $fc_main;
-          opacity: 0.3;
-        }
-      }
-      @keyframes skeleton {
-        0% {
-          opacity: 0.7;
-        }
-        100% {
-          opacity: 0.2;
-        }
+        font-size: 16px;
+        font-weight: $fw_b;
+        color: $fc_main;
+        opacity: 0.3;
       }
     }
   }
-}
-
-// 위로 가기 버튼
-#going_up {
-  width: 10vw;
-  font-size: 3em;
-  text-align: center;
-  color: gray;
-  z-index: 999;
-  position: fixed;
-  bottom: 50px;
-  right: 0;
-  &:hover {
-    color: $pc_main;
-  }
-  opacity: 0;
-  transition: 1s;
-}
-
-// 순서 안내 컬러
-.stepColor {
-  background-color: $pc_main !important;
-}
-
-// 검색 결과
-// #output_container {
-//   border-top: 1px solid gray;
-//   width: 90%;
-//   margin: 100px auto 0;
-//   padding-top: 100px;
-
-//   .row_container {
-//     width: 100%;
-//     margin: 0;
-//     .rec_container {
-//       width: 200px;
-//       height: 470px;
-//       float: left;
-//       margin: 0 0 20px 60px;
-//       transition: 1s;
-//       cursor: pointer;
-//       h3 {
-//         font-weight: 700;
-//         font-size: 20px;
-//         width: 200px;
-//         padding: 0 5px;
-//         overflow: hidden;
-//         text-overflow: ellipsis;
-//         white-space: nowrap;
-//         margin: 5px 0;
-//         a {
-//           text-decoration: none;
-//           color: rgb(8, 8, 212);
-//         }
-//       }
-//       h4 {
-//         font-weight: 500;
-//         width: 200px;
-//         font-size: 14px;
-//         padding: 0 5px;
-//         overflow: hidden;
-//         margin-top: 10px;
-//         margin-bottom: 5px;
-//         text-overflow: ellipsis;
-//         white-space: nowrap;
-//       }
-//       p {
-//         text-align: right;
-//         font-weight: 400;
-//         margin-bottom: 3px;
-//         padding: 0 5px;
-//         font-size: 14px;
-//         border-bottom: 1px solid #eee;
-//         &:last-of-type {
-//           font-weight: 600;
-//           margin-top: 20px;
-//           border-bottom: 1px solid #eee;
-//         }
-//       }
-
-//       img {
-//         width: 200px;
-//         height: 250px;
-//         box-shadow: 10px 0px 13px -7px #000000;
-//       }
-
-//       ::after {
-//         clear: both;
-//       }
-//     }
-//   }
-// }
-
-// loading
-#loading {
-  width: 100px;
-  height: 100px;
-  background: url(../img/loading.gif) no-repeat center/cover;
-  position: absolute;
-  left: 50%;
-  top: 70%;
-  transform: translate(-50%, -50%);
-  z-index: 99999999;
-  display: none;
-}
-
-#loading.active {
-  display: block;
-}
-
-#title2 {
-  font-size: 20px;
-  // opacity: 0;
-  transition: 1s;
-  text-align: center;
-  margin: 70px 0;
-  line-height: 2;
 }
