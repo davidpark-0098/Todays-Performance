@@ -1,4 +1,5 @@
 import KOPIS_PERFORMANCE_LIST_SERVICE_KEY from "./key.js";
+// 로딩 loading("start"), loading("end")
 import loading from "./loading.js";
 
 /**

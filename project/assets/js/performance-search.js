@@ -1,5 +1,6 @@
 // 공연 검색
 import performanceSearchResults from "./performance-search-results.js";
+// 로딩 loading("start"), loading("end")
 import loading from "./loading.js";
 
 // 날짜 기본 값을 오늘로 지정

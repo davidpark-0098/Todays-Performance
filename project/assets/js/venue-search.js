@@ -1,5 +1,7 @@
 // 공연장 지도 및 마커 표시
 import searchVenueKakaoMap from "./kakao-map-venue-search.js";
+// 로딩 loading("start"), loading("end")
+import loading from "./loading.js";
 
 // search performance 공연 검색 결과에서 선택한 공연장을 파라미터로 전달 받습니다
 const urlParams = new URLSearchParams(window.location.search);
@@ -29,6 +31,8 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   if (selectedMap === undefined || selectedMap === null) {
     alert("지역을 선택해 주세요.");
   } else {
+    // 로딩 시작
+    loading("start");
     // 예외처리를 통과하면, 검색을 시작합니다.
     // 검색 후 지도 및 마커를 표시 합니다.
     searchVenueKakaoMap(selectedMap, searchedQuery);
