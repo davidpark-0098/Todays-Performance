@@ -29,8 +29,6 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   if (selectedMap === undefined || selectedMap === null) {
     alert("지역을 선택해 주세요.");
   } else {
-    // 지도가 중첩되어 생성되는 것을 방지하기 위해 기존에 생성한 지도는 삭제합니다
-    document.getElementById("map").innerHTML = "";
     // 예외처리를 통과하면, 검색을 시작합니다.
     // 검색 후 지도 및 마커를 표시 합니다.
     searchVenueKakaoMap(selectedMap, searchedQuery);

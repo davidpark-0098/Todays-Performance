@@ -191,6 +191,9 @@ async function performanceSearchResults(
 
       // 첫 공연 검색시, performanceSection태그를 생성하고 fragment를 자식요소로 넣습니다
     } else {
+      // 기존 검색 결과 내용을 삭제합니다
+      document.getElementById("performance_search_results").innerHTML = "";
+
       const performanceSection = document.createElement("section");
       performanceSection.setAttribute("id", "performanceSection");
       performanceSection.appendChild(fragment);
@@ -202,6 +205,8 @@ async function performanceSearchResults(
     // 검색 결과가 없다면, 메시지를 출력합니다.
     if (totalMatchedPerformance === 0) {
       document.getElementById("performance_search_results").innerHTML = "<a href='#top' id='no_results'>검색 결과가 없습니다.</a>";
+
+      // 검색 결과가 있다면, 더보기 버튼을 활성화 하고, 콘솔에 검색 결과를 보여줍니다
     } else {
       document.getElementById("more_btn").style.display = "block";
       console.log("검색 결과, 모든 총 공연 데이터는 " + totalMatchedPerformance + "개 입니다.");

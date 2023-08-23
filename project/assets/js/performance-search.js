@@ -36,9 +36,6 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   if (selectedGenre === null || selectedGenre === undefined) {
     alert("장르를 선택해 주세요.");
   } else {
-    // 기존 검색 결과 내용을 삭제합니다
-    document.getElementById("performance_search_results").innerHTML = "";
-
     // 로딩 시작
     loading("start");
 
