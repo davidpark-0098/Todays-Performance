@@ -46,11 +46,11 @@
         <!-- search icon -->
         <i id="search" class="fa-solid fa-magnifying-glass"></i><br />
         <b>
-          <h1 id="title" class="hvr-grow">나에게 꼭 맞는 공연을 추천해 드립니다!</h1>
+          <h1 id="title" class="hvr-grow">나에게 꼭 맞는 공연을 찾아보세요!</h1>
         </b>
         <h5 id="sub_title">
-          지역별, 장르별 전국의 다양한 공연을 소개합니다.<br />
-          나만의 맞춤형 공연을 찾아보세요.
+          장르 및 지역에 따라 전국의 다양한 공연을 소개합니다.<br />
+          지역에 맞는 공연장도 찾아보세요.
         </h5>
       </section>
 
@@ -60,9 +60,8 @@
       <!-- 검색 페이지 이동 버튼 -->
       <section id="search_page_btn_sec">
         <ul id="search_page_btn_ul">
-          <li id="recommendBtn" class="shadow border_r"><a href="./form.html">나에게 꼭 맞는 공연 추천 받기</a></li>
-          <li class="searchPageBtn border_r"><a href="./performance-search.html">공연 검색하기</a></li>
-          <li class="searchPageBtn border_r"><a href="./venue-search.html">공연장 찾아보기</a></li>
+          <li id="performance_search_page_btn" class="shadow border_r"><a href="./performance-search.html">나에게 꼭 맞는 공연 찾아보기</a></li>
+          <li id="venue_search_page_btn"><a href="./venue-search.html">공연장 찾아보기</a></li>
         </ul>
       </section>
     </main>
@@ -73,8 +72,10 @@
     <!-- ==========SCRIPT========== -->
     <!-- axios -->
     <script src="../node_modules/axios/dist/axios.min.js"></script>
+
     <!-- header footer 생성 -->
     <script src="./assets/js/include.js"></script>
+
     <!-- todays- -->
     <script type="module" src="./assets/js/todays-performance.js"></script>
   </body>
