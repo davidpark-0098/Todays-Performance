@@ -24,9 +24,8 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   // 검색 클릭시, 남아있는 더보기 버튼을 숨기기
   document.getElementById("more_btn").style.display = "none";
 
-  const formData = new FormData(e.target); // form 데이터 캡처
-
   // FormData 객체를 사용하여 폼 데이터 접근
+  const formData = new FormData(e.target); // form 데이터 캡처
   // 선택한 날짜 값
   selectedDate = formData.get("date");
   // 선택한 장르 값
@@ -49,17 +48,16 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   // 장르 선택 확인
   if (selectedGenre === null || selectedGenre === undefined) {
     alert("장르를 선택해 주세요.");
-  }
-  // else if (selectedMap === null || selectedMap === undefined) {
-  //   alert("지역을 선택해 주세요.");
-  // }
-  else {
+  } else if (selectedMap === null || selectedMap === undefined) {
+    alert("지역을 선택해 주세요.");
+  } else {
     // 검색을 시작하며, 검색 버튼을 무력화 시킵니다
     document.getElementById("submit_btn").disabled = true;
     // 로딩 시작
     loading("start");
-    // 기존 검색 결과 내용을 삭제합니다
-    document.getElementById("performanceSection").innerHTML = "";
+    // 검색어가 있고 없고 차이에 따라, 공연 검색 결과를 출력하는 방식이 다릅니다
+    // 검색어가 있는 경우, sumit과 동시에 기존 검색 결과 내용을 삭제합니다
+    searchedQuery && (document.getElementById("performanceSection").innerHTML = "");
     // 예외처리를 통과하면, 검색을 시작합니다
     performanceSearch();
   }
@@ -69,19 +67,22 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
  * 더보기 클릭시, 기존 검색 데이터를 가지고 performanceSearch()를 실행합니다
  */
 document.getElementById("more_btn").addEventListener("click", () => {
-  // 로딩 시작
-  loading("start");
-  // 검색된 타입이 더보기일 경우
-  searchedType = "more";
-  // 더보기 클릭시, 더보기 버튼을 숨기기
+  // 더보기 버튼을 숨기기
   document.getElementById("more_btn").style.display = "none";
   // 검색을 시작하며, 검색 버튼을 무력화 시킵니다
   document.getElementById("submit_btn").disabled = true;
+  // 로딩 시작
+  loading("start");
 
+  // 검색된 타입이 더보기일 경우
+  searchedType = "more";
+
+  // 임시 콘솔 출력
   console.log(`날짜: ${new Date(
     selectedDate
   )}, 장르: ${selectedGenre}, 지역: ${selectedMap}, 검색어: ${searchedQuery}, 현재 페이지: ${currentPage}, 최대 검색 가능한 페이지: ${maxPageCount}, 누적 공연 데이터 개수: ${totalMatchedPerformance}, 최대 누적 가능 공연 데이터 개수: ${totalMatchedPerformanceLimit}, 검색 타입: ${searchedType}
   `);
+
   performanceSearch();
 });
 
@@ -102,8 +103,10 @@ async function performanceSearch() {
     totalMatchedPerformanceLimit,
     searchedType
   );
-  currentPage = returnCurrentPage + 1;
-  maxPageCount = currentPage + 99;
-  totalMatchedPerformance = returnTotalMatchedPerformance;
-  totalMatchedPerformanceLimit = totalMatchedPerformance + 10;
+
+  // 반환받은 값을 통해 기존 변수값을 업데이트합니다
+  currentPage = returnCurrentPage + 1; // 다음 검색할 페이지 할당
+  maxPageCount = currentPage + 99; // 현재 페이지부터 앞으로 검색 가능한 최대 페이지 수 할당
+  totalMatchedPerformance = returnTotalMatchedPerformance; // 공연 검색결과 개수 할당
+  totalMatchedPerformanceLimit = totalMatchedPerformance + 10; // 최대 공연 검색결과 개수 할당
 }

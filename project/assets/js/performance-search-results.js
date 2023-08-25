@@ -2,19 +2,17 @@
 import performanceListAPI from "./performanceListAPI.js";
 // 로딩 loading("start"), loading("end")
 import loading from "./loading.js";
-// 장소 검색
-// import kakaoMapPerformanceSearch from "./kakao-map-performance-search.js";
 
-// "title": "장윤정 라이브 콘서트 [성남]",
-// "creator": "누리집",
-// "collectionDb": "kopis01_공연목록",
-// "subjectCategory": "콘서트",
-// "referenceIdentifier": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF153974_190903_094953.gif",
-// "language": "kor",
-// "url": "http://www.kopis.or.kr/por/db/pblprfr/pblprfrView.do?menuId=MNU_00020&mt20Id=PF153974#20819",
-// "spatialCoverage": "성남아트센터",
-// "temporalCoverage": "2019.12.07~2019.12.07",
-// "subDescription": "공연상태: 공연완료 오픈런: N"
+/* "title": "장윤정 라이브 콘서트 [성남]",
+"creator": "누리집",
+"collectionDb": "kopis01_공연목록",
+"subjectCategory": "콘서트",
+"referenceIdentifier": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF153974_190903_094953.gif",
+"language": "kor",
+"url": "http://www.kopis.or.kr/por/db/pblprfr/pblprfrView.do?menuId=MNU_00020&mt20Id=PF153974#20819",
+"spatialCoverage": "성남아트센터",
+"temporalCoverage": "2019.12.07~2019.12.07",
+"subDescription": "공연상태: 공연완료 오픈런: N" */
 
 /**
  * 공연 데이터를 HTML태그로 생성합니다
@@ -39,32 +37,30 @@ async function performanceSearchResults(
   maxPageCount = 100,
   totalMatchedPerformance = 0,
   totalMatchedPerformanceLimit = 10,
-  searchedType,
+  searchedType = "submit",
   fragment = document.createDocumentFragment()
 ) {
-  let matchedPerformance = 0; // currentPage에서 검색 조건과 일치하는 공연 결과 개수
   const numOfRows = 40; // 한 페이지에 불러올 총 데이터 개수
-  const jsonArray = [];
+  const jsonArray = []; // 필터링한 json data를 담을 변수 초기화
+  let matchedPerformance = 0; // currentPage에서 검색 조건과 일치하는 공연 결과 개수
 
   /**
    * 공연의 시작 기간을 반환합니다
    * @param {Object} performanceData : 공연 정보
    * @returns {Date}
    */
-  function periodStartDate(performanceData) {
-    return new Date(performanceData.temporalCoverage.replaceAll(".", "-").split("~")[0]);
-  }
+  const periodStartDate = (performanceData) => new Date(performanceData.temporalCoverage.replaceAll(".", "-").split("~")[0]);
 
   // 공연 데이터를 가져옵니다
-  // performanceListAPI(numOfRows, currentPage)
   let json = await performanceListAPI(numOfRows, currentPage);
 
+  // 공연 데이터를 필터링 합니다
   for (let performance of json) {
-    // 검색어가 있다면, 공연 제목 또는 공연 장소 중 검색어에 포함되어 있을때 통과
+    // 검색어가 있다면, 공연 제목 또는 공연 장소 중 검색어에 포함되어 있거나, 검색어가 없을 경우
     if (searchedQuery ? performance.title.includes(searchedQuery) || performance.spatialCoverage.includes(searchedQuery) : true) {
-      // 선택한 장르가 일치하거나 전체일때 통과
+      // 선택한 장르가 일치하거나 전체일 경우
       if (selectedGenre === performance.subjectCategory || selectedGenre === "전체") {
-        // 선택한 날짜가 공연 시작 날짜보다 클때 통과
+        // 선택한 날짜가 공연 시작 날짜보다 큰 경우
         // 가져오는 api 공연 데이터가 2023년도 기준에 미치지 않기 때문에, 모든 공연 시작과 끝 날짜에 4년을 더합니다.
         if (selectedDate <= periodStartDate(performance).setFullYear(periodStartDate(performance).getFullYear() + 4)) {
           // 선택한 지역이 전국 이거나, 각 선택한 지역과 공연장이 위치하는 지역이 같다면 jsonArray에 performance를 넣습니다
@@ -89,11 +85,14 @@ async function performanceSearchResults(
                 // 검색한 공연장 지역을 선택한 지역과 대조 및 결과 반환
                 resolve(data[0].address_name.substring(0, 2) === selectedMap);
               } else {
+                // 임시 콘솔 출력
                 // console.log(
                 //   `#######################검색 실패#######################\n${performance.spatialCoverage
                 //     .replace(/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-=|"']/g, " ")
                 //     .replace(/\s+/g, " ")}\n-----------------------------------------------------`
                 // );
+
+                // 키워드 검색 실패의 경우 false를 반환합니다
                 resolve(false);
               }
             }
@@ -173,22 +172,25 @@ async function performanceSearchResults(
     // fragment에 공연 정보를 저장합니다
     fragment.appendChild(performanceArticle);
 
-    // 공연 데이터 카운트
-    matchedPerformance++;
-    totalMatchedPerformance++;
+    matchedPerformance++; // 현재 페이지 공연 데이터 카운트
+    totalMatchedPerformance++; // 전체 페이지 공연 데이터 카운트
   });
 
-  console.log(currentPage + "번째 페이지의 검색 결과, 일치하는 공연 데이터는" + matchedPerformance + "개 입니다. " + currentPage + "페이지");
+  console.log(`${currentPage}번째 페이지의 검색 결과, 일치하는 공연 데이터는 ${matchedPerformance}개 입니다.`);
 
   // 검색어가 있는 경우, performanceSection태그에 바로 공연 정보를 넣습니다
   if (searchedQuery) {
-    // skeleton screen이 있다면, 제거합니다
-    document.getElementById("performance_search_results_skeleton")?.remove();
+    if (matchedPerformance > 0) {
+      // skeleton screen이 있다면, 제거합니다
+      document.getElementById("performance_search_results_skeleton")?.remove();
 
-    // 공연 검색 데이터를 performanceSection태그의 자식요소로 넣습니다
-    document.getElementById("performanceSection").appendChild(fragment);
+      // 공연 검색 데이터를 performanceSection태그의 자식요소로 넣습니다
+      document.getElementById("performanceSection").appendChild(fragment);
+    }
 
-    if (totalMatchedPerformance < totalMatchedPerformanceLimit) {
+    // 공연 검색 결과 개수가 totalMatchedPerformanceLimit 미만 이라면, 다음 페이지를 검색합니다
+    // 하지만 최대 검색 가능 페이지 개수에 도달한다면 함수 재귀를 중단합니다
+    if (totalMatchedPerformance < totalMatchedPerformanceLimit && currentPage <= maxPageCount) {
       // 다음 페이지를 검색합니다
       currentPage++;
       return performanceSearchResults(
@@ -206,13 +208,15 @@ async function performanceSearchResults(
   }
 
   // 공연 결과 개수가 totalMatchedPerformanceLimit 이상 도달했다면, 검색을 중단합니다
+  // 하지만 최대 검색 가능 페이지 개수에 도달한다면 함수 재귀를 중단합니다
   if (totalMatchedPerformance >= totalMatchedPerformanceLimit || currentPage >= maxPageCount) {
     // 로딩 중단
     loading("end");
+    // 검색을 종료하며, 검색 버튼을 복구 시킵니다
     document.getElementById("submit_btn").disabled = false;
 
     // 검색 타입이 submit인 경우
-    if (searchedType === "submit") {
+    if (searchedType === "submit" && !searchedQuery) {
       // skeleton screen이 있다면, 제거합니다
       document.getElementById("performance_search_results_skeleton")?.remove();
       // 기존 검색 결과 내용을 삭제합니다
@@ -221,20 +225,30 @@ async function performanceSearchResults(
       document.getElementById("performanceSection").appendChild(fragment);
 
       // 검색 타입이 more인 경우
-    } else if (searchedType === "more") {
+    } else if (searchedType === "more" && !searchedQuery) {
       document.getElementById("performanceSection").appendChild(fragment);
     }
 
     // 검색 결과가 있다면, 더보기 버튼을 활성화 하고, 콘솔에 검색 결과를 보여줍니다
-    if (totalMatchedPerformance > 0) {
-      document.getElementById("more_btn").style.display = "block";
-      console.log("검색 결과, 모든 총 공연 데이터는 " + totalMatchedPerformance + "개 입니다.");
+    document.getElementById("more_btn").style.display = "block";
+    console.log(`검색 결과, 합계 공연 데이터는 ${totalMatchedPerformance}개 입니다.`);
 
-      // 검색 결과가 없다면, 메시지를 출력합니다.
-    } else {
-      document.getElementById("performance_search_results").innerHTML = "<a href='#top' id='no_results'>검색 결과가 없습니다.</a>";
+    // 검색 결과가 없다면, 메시지를 출력합니다.
+    if (totalMatchedPerformance === 0) {
+      document.getElementById("performanceSection").innerHTML = "<div id='no_results_div'><a href='#' id='no_results_a'>검색 결과가 없습니다.</a></div>";
+
+      // 검색 결과 메시지 클릭 이벤트
+      document.getElementById("no_results_a").addEventListener("click", (e) => {
+        e.preventDefault(); // 기본 기능 제어
+
+        const input = document.getElementById("input_search_query");
+        // 검색어 입력란 값을 비우고 포커스
+        input.value = "";
+        input.focus();
+      });
     }
 
+    // 현재 페이지와 모든 공연 검색 결과 개수를 반환합니다
     return [currentPage, totalMatchedPerformance];
   } else {
     // 다음 페이지를 검색합니다
