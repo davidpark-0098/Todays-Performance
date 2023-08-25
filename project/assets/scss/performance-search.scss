@@ -201,8 +201,17 @@ main {
       flex-wrap: wrap;
       gap: 20px 50px;
 
-      #no_results {
-        font-size: 20px;
+      #no_results_div {
+        width: 100%;
+        height: calc(100vh - 237px);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #no_results_a {
+          font-size: 16px;
+        }
       }
 
       #performanceArticle {
