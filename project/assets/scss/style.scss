@@ -19,11 +19,8 @@
 // header와 footer 사이 main
 main {
   width: 100%;
-
-  // 텍스트 정렬
   text-align: center;
 
-  // 블록 정렬
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -97,13 +94,14 @@ main {
 
     #search_page_btn_ul {
       width: 100%;
+
       display: flex;
       flex-direction: column;
       align-items: center;
 
       // 공연 추천 페이지 이동 버튼
-      #recommendBtn {
-        width: 422px;
+      #performance_search_page_btn {
+        width: 400px;
         height: 50px;
         background-color: $pc_main;
         transition: all 0.3s ease;
@@ -122,13 +120,10 @@ main {
       }
 
       // 공연, 공연장 검색 페이지 이동 버튼
-      .searchPageBtn {
-        width: 422px;
+      #venue_search_page_btn {
+        width: 400px;
         height: 50px;
-
-        &:nth-child(2) {
-          margin-top: 10px;
-        }
+        margin-top: 10px;
 
         a {
           display: inline-block;
@@ -144,94 +139,3 @@ main {
     }
   }
 }
-
-// // 태블릿 반응형웹
-// @include tablet {
-//   body {
-//     main {
-//       margin: 48px 0;
-//       // 검색 버튼
-//       #main_button {
-//         ul {
-//           li {
-//             width: 41%;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-
-// // 모바일 반응형웹
-// @include mobile {
-//   header {
-//     #shortcut_nav {
-//       ul {
-//         li:nth-child(n + 2) {
-//           display: none;
-//         }
-//       }
-//     }
-//   }
-//   main {
-//     min-width: 400px;
-//     #search {
-//       font-size: $h1_m;
-//     }
-//     #main_title {
-//       b {
-//         #title {
-//           font-size: $h1_m;
-//           line-height: 45px;
-//           margin: 8px 0 0 0;
-//         }
-//       }
-//       #sub_title {
-//         font-size: $fs_l;
-//         line-height: 20px;
-//       }
-//     }
-//     #main_today {
-//       #today {
-//         display: flex;
-//         justify-content: space-evenly;
-//         flex-wrap: wrap;
-//         padding: 15px 30px;
-//         box-sizing: border-box;
-//         img {
-//           width: 20%;
-//           padding: 5px;
-//           box-sizing: border-box;
-//           object-fit: cover;
-//         }
-//         img:nth-child(n + 11) {
-//           display: none;
-//         }
-//       }
-//     }
-//     #main_button {
-//       ul {
-//         li {
-//           min-width: 220px;
-//           max-width: 41%;
-//           height: 40px;
-//           a {
-//             font-size: $fs_l;
-//             line-height: 40px;
-//           }
-//         }
-//         #search_page {
-//           margin-top: 0;
-//         }
-//       }
-//     }
-//   }
-//   footer {
-//     address {
-//       text-overflow: ellipsis;
-//       overflow: hidden;
-//       white-space: nowrap;
-//       padding: 0 20px;
-//     }
-//   }
-// }
