@@ -1,7 +1,5 @@
 // KOPIS Performance List API
 import performanceListAPI from "./performanceListAPI.js";
-// 로딩 loading("start"), loading("end")
-import loading from "./loading.js";
 
 /* "title": "장윤정 라이브 콘서트 [성남]",
 "creator": "누리집",
@@ -34,13 +32,13 @@ async function performanceSearchResults(
   selectedMap,
   searchedQuery,
   currentPage = 1,
-  maxPageCount = 100,
+  maxPageCount = 10,
   totalMatchedPerformance = 0,
   totalMatchedPerformanceLimit = 10,
   searchedType = "submit",
   fragment = document.createDocumentFragment()
 ) {
-  const numOfRows = 40; // 한 페이지에 불러올 총 데이터 개수
+  const numOfRows = 100; // 한 페이지에 불러올 총 데이터 개수
   const jsonArray = []; // 필터링한 json data를 담을 변수 초기화
   let matchedPerformance = 0; // currentPage에서 검색 조건과 일치하는 공연 결과 개수
 
@@ -57,7 +55,7 @@ async function performanceSearchResults(
   // 공연 데이터를 필터링 합니다
   for (let performance of json) {
     // 검색어가 있다면, 공연 제목 또는 공연 장소 중 검색어에 포함되어 있거나, 검색어가 없을 경우
-    if (searchedQuery ? performance.title.includes(searchedQuery) || performance.spatialCoverage.includes(searchedQuery) : true) {
+    if (searchedQuery ? performance.title?.includes(searchedQuery) || performance.spatialCoverage?.includes(searchedQuery) : true) {
       // 선택한 장르가 일치하거나 전체일 경우
       if (selectedGenre === performance.subjectCategory || selectedGenre === "전체") {
         // 선택한 날짜가 공연 시작 날짜보다 큰 경우
@@ -104,11 +102,8 @@ async function performanceSearchResults(
     }
   }
 
-  // 공연 데이터를 html로 생성
-  jsonArray.some((mp) => {
-    // 검색된 총 공연 결과가 totalMatchedPerformanceLimit 이상일 경우, 태그 생성을 중단합니다
-    if (totalMatchedPerformance >= totalMatchedPerformanceLimit) return true;
-
+  // 공연 데이터 HTML 생성
+  jsonArray.forEach((mp) => {
     // article태그 생성
     const performanceArticle = document.createElement("article");
     performanceArticle.setAttribute("id", "performanceArticle");
@@ -123,9 +118,9 @@ async function performanceSearchResults(
 
       // 포스터가 없는 데이터의 경우 "  " 이렇게 표시 되기 때문에, trim() 이후 포스터가 없다면 no-img.jpg를 표시한다
       poster.src = mp.referenceIdentifier;
-
-      // 공연 포스터 이미지가 없는 경우 Icon으로 대체합니다
-    } else {
+    }
+    // 공연 포스터 이미지가 없는 경우 Icon으로 대체합니다
+    else {
       poster = document.createElement("div");
       poster.classList.add("noImgDiv");
 
@@ -169,7 +164,7 @@ async function performanceSearchResults(
     performanceArticle.appendChild(genreSpan);
     performanceArticle.appendChild(periodSpan);
 
-    // fragment에 공연 정보를 저장합니다
+    // fragment에 공연 데이터 append
     fragment.appendChild(performanceArticle);
 
     matchedPerformance++; // 현재 페이지 공연 데이터 카운트
@@ -180,17 +175,14 @@ async function performanceSearchResults(
 
   // 검색어가 있는 경우, performanceSection태그에 바로 공연 정보를 넣습니다
   if (searchedQuery) {
-    if (matchedPerformance > 0) {
+    // 검색 결과가 있고, 검색 결과가 10개 미만이며, 현재 검색 페이지가 최대 검색 가능페이지 미만인 경우
+    if (matchedPerformance > 0 && totalMatchedPerformance < totalMatchedPerformanceLimit && currentPage < maxPageCount) {
       // skeleton screen이 있다면, 제거합니다
       document.getElementById("performance_search_results_skeleton")?.remove();
 
       // 공연 검색 데이터를 performanceSection태그의 자식요소로 넣습니다
       document.getElementById("performanceSection").appendChild(fragment);
-    }
 
-    // 공연 검색 결과 개수가 totalMatchedPerformanceLimit 미만 이라면, 다음 페이지를 검색합니다
-    // 하지만 최대 검색 가능 페이지 개수에 도달한다면 함수 재귀를 중단합니다
-    if (totalMatchedPerformance < totalMatchedPerformanceLimit && currentPage <= maxPageCount) {
       // 다음 페이지를 검색합니다
       currentPage++;
       return performanceSearchResults(
@@ -210,46 +202,8 @@ async function performanceSearchResults(
   // 공연 결과 개수가 totalMatchedPerformanceLimit 이상 도달했다면, 검색을 중단합니다
   // 하지만 최대 검색 가능 페이지 개수에 도달한다면 함수 재귀를 중단합니다
   if (totalMatchedPerformance >= totalMatchedPerformanceLimit || currentPage >= maxPageCount) {
-    // 로딩 중단
-    loading("end");
-    // 검색을 종료하며, 검색 버튼을 복구 시킵니다
-    document.getElementById("submit_btn").disabled = false;
-
-    // 검색 타입이 submit인 경우
-    if (searchedType === "submit" && !searchedQuery) {
-      // skeleton screen이 있다면, 제거합니다
-      document.getElementById("performance_search_results_skeleton")?.remove();
-      // 기존 검색 결과 내용을 삭제합니다
-      document.getElementById("performanceSection").innerHTML = "";
-      // 공연 검색 데이터를 performanceSection태그의 자식요소로 넣습니다
-      document.getElementById("performanceSection").appendChild(fragment);
-
-      // 검색 타입이 more인 경우
-    } else if (searchedType === "more" && !searchedQuery) {
-      document.getElementById("performanceSection").appendChild(fragment);
-    }
-
-    // 검색 결과가 있다면, 더보기 버튼을 활성화 하고, 콘솔에 검색 결과를 보여줍니다
-    document.getElementById("more_btn").style.display = "block";
-    console.log(`검색 결과, 합계 공연 데이터는 ${totalMatchedPerformance}개 입니다.`);
-
-    // 검색 결과가 없다면, 메시지를 출력합니다.
-    if (totalMatchedPerformance === 0) {
-      document.getElementById("performanceSection").innerHTML = "<div id='no_results_div'><a href='#' id='no_results_a'>검색 결과가 없습니다.</a></div>";
-
-      // 검색 결과 메시지 클릭 이벤트
-      document.getElementById("no_results_a").addEventListener("click", (e) => {
-        e.preventDefault(); // 기본 기능 제어
-
-        const input = document.getElementById("input_search_query");
-        // 검색어 입력란 값을 비우고 포커스
-        input.value = "";
-        input.focus();
-      });
-    }
-
     // 현재 페이지와 모든 공연 검색 결과 개수를 반환합니다
-    return [currentPage, totalMatchedPerformance];
+    return [currentPage, totalMatchedPerformance, fragment];
   } else {
     // 다음 페이지를 검색합니다
     currentPage++;
