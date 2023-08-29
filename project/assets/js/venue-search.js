@@ -5,11 +5,16 @@ import loading from "./loading.js";
 
 // search performance 공연 검색 결과에서 선택한 공연장을 파라미터로 전달 받습니다
 const urlParams = new URLSearchParams(window.location.search);
+
 // 파라미터가 있을 경우 해당 공연장을 검색합니다
-if (urlParams.get("venue")) {
+if (urlParams.get("area") && urlParams.get("venue")) {
+  // 해당 지역을 selecte_map 항목에 설정합니다
+  document.getElementById("select_map").value = urlParams.get("area");
   // 선택한 공연장 이름을 input에 설정합니다
   document.getElementById("input_search_query").value = urlParams.get("venue");
-  searchVenueKakaoMap("공연장", urlParams.get("venue"));
+
+  // 장소 검색
+  searchVenueKakaoMap(urlParams.get("area"), urlParams.get("venue"), "urlParams");
 }
 
 /**
@@ -30,6 +35,7 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   // 지역 값 검사
   if (selectedMap === undefined || selectedMap === null) {
     alert("지역을 선택해 주세요.");
+    document.getElementById("select_map").focus();
   } else {
     // 로딩 시작
     loading("start");

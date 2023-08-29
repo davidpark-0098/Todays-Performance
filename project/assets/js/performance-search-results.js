@@ -31,11 +31,11 @@ async function performanceSearchResults(
   selectedGenre,
   selectedMap,
   searchedQuery,
-  currentPage = 1,
-  maxPageCount = 10,
-  totalMatchedPerformance = 0,
-  totalMatchedPerformanceLimit = 10,
-  searchedType = "submit",
+  currentPage,
+  maxPageCount,
+  totalMatchedPerformance,
+  totalMatchedPerformanceLimit,
+  searchedType,
   fragment = document.createDocumentFragment()
 ) {
   const numOfRows = 100; // 한 페이지에 불러올 총 데이터 개수
@@ -103,7 +103,7 @@ async function performanceSearchResults(
   }
 
   // 공연 데이터 HTML 생성
-  jsonArray.forEach((mp) => {
+  jsonArray?.forEach((mp) => {
     // article태그 생성
     const performanceArticle = document.createElement("article");
     performanceArticle.setAttribute("id", "performanceArticle");
@@ -141,7 +141,7 @@ async function performanceSearchResults(
     // a태그 생성과 공연장 작성
     const venueA = document.createElement("a");
     venueA.className = "venueA";
-    venueA.href = `http://127.0.0.1:5500/project/venue-search.html?venue=${mp.spatialCoverage}`;
+    venueA.href = `http://127.0.0.1:5500/project/venue-search.html?area=${selectedMap}&venue=${mp.spatialCoverage}`;
     venueA.target = "_blank";
     venueA.rel = "noreferrer";
     venueA.innerHTML = mp.spatialCoverage;
@@ -164,49 +164,44 @@ async function performanceSearchResults(
     performanceArticle.appendChild(genreSpan);
     performanceArticle.appendChild(periodSpan);
 
-    // fragment에 공연 데이터 append
-    fragment.appendChild(performanceArticle);
-
     matchedPerformance++; // 현재 페이지 공연 데이터 카운트
     totalMatchedPerformance++; // 전체 페이지 공연 데이터 카운트
+
+    // 검색어가 있는 경우
+    if (searchedQuery) {
+      // submit검색과 검색 결과가 1개 발견한 경우
+      if (searchedType === "submit" && totalMatchedPerformance === 1) {
+        // skeleton screen이 있다면, 제거합니다
+        document.getElementById("performance_search_results_skeleton")?.remove();
+
+        // 더보기 버튼 활성화
+        document.getElementById("more_btn").style.display = "block";
+      }
+
+      // 공연 검색 데이터를 performanceSection태그의 자식요소로 넣습니다
+      document.getElementById("performanceSection").appendChild(performanceArticle);
+    }
+    // 검색어가 없는 경우
+    else {
+      // fragment에 공연 데이터 append
+      fragment.appendChild(performanceArticle);
+    }
   });
 
   console.log(`${currentPage}번째 페이지의 검색 결과, 일치하는 공연 데이터는 ${matchedPerformance}개 입니다.`);
 
-  // 검색어가 있는 경우, performanceSection태그에 바로 공연 정보를 넣습니다
-  if (searchedQuery) {
-    // 검색 결과가 있고, 검색 결과가 10개 미만이며, 현재 검색 페이지가 최대 검색 가능페이지 미만인 경우
-    if (matchedPerformance > 0 && totalMatchedPerformance < totalMatchedPerformanceLimit && currentPage < maxPageCount) {
-      // skeleton screen이 있다면, 제거합니다
-      document.getElementById("performance_search_results_skeleton")?.remove();
-
-      // 공연 검색 데이터를 performanceSection태그의 자식요소로 넣습니다
-      document.getElementById("performanceSection").appendChild(fragment);
-
-      // 다음 페이지를 검색합니다
-      currentPage++;
-      return performanceSearchResults(
-        selectedDate,
-        selectedGenre,
-        selectedMap,
-        searchedQuery,
-        currentPage,
-        maxPageCount,
-        totalMatchedPerformance,
-        totalMatchedPerformanceLimit,
-        searchedType
-      );
-    }
-  }
-
-  // 공연 결과 개수가 totalMatchedPerformanceLimit 이상 도달했다면, 검색을 중단합니다
-  // 하지만 최대 검색 가능 페이지 개수에 도달한다면 함수 재귀를 중단합니다
+  // 공연 결과 개수가 totalMatchedPerformanceLimit 이상인 경우,
+  // 현재 페이지가 최대 검색 가능 페이지 이상인 경우 검색을 중단합니다
   if (totalMatchedPerformance >= totalMatchedPerformanceLimit || currentPage >= maxPageCount) {
     // 현재 페이지와 모든 공연 검색 결과 개수를 반환합니다
     return [currentPage, totalMatchedPerformance, fragment];
-  } else {
+  }
+  // 위 조건을 만족하지 않은 경우 재검색합니다
+  else {
     // 다음 페이지를 검색합니다
     currentPage++;
+
+    // 재귀함수
     return performanceSearchResults(
       selectedDate,
       selectedGenre,

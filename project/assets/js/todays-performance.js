@@ -7,7 +7,7 @@ function todaysPerformance() {
   performanceListAPI(14, 1)
     .then((json) => {
       // index의 지정 값 만큼 공연 포스터와 url를 생성합니다
-      json.some((performance, index) => {
+      json.forEach((performance) => {
         // article태그 생성과 클래스 이름 적용
         const article = document.createElement("article");
         article.className = "performanceArticle";
@@ -27,8 +27,6 @@ function todaysPerformance() {
         a.appendChild(img);
         article.appendChild(a);
         document.querySelector("#todays_performance").appendChild(article);
-
-        return index === 13 && true;
       });
     })
     .catch((e) => {
