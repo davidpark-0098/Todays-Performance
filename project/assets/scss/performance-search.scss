@@ -23,13 +23,12 @@ main {
 
   #searchDiv {
     width: 100%;
-    height: 80px;
-    padding-bottom: 20px;
+    padding: 20px 0;
     border-bottom: 1px solid $line;
 
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
 
     position: sticky;
@@ -40,24 +39,27 @@ main {
 
     nav {
       width: 100%;
-
       display: flex;
-      justify-content: center;
-      align-items: baseline;
+      flex-direction: column;
+      align-items: center;
 
       #search_title {
-        text-align: center;
         font-weight: $fw_b;
+        line-height: $h1;
         color: $fc_main;
-        margin: 0 15px;
       }
 
       a {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: $fw_b;
         color: $fc_sub;
+
         opacity: 0.5;
         transition: 0.3s all;
+
+        display: flex;
+        align-items: center;
+        margin: 5px 0 20px;
 
         &:hover {
           color: $fc_main;
@@ -65,14 +67,8 @@ main {
         }
 
         i {
-          font-size: 14.5px;
-
-          &:first-child {
-            margin-right: 3px;
-          }
-          &:last-child {
-            margin-left: 3px;
-          }
+          font-size: 10px;
+          margin-left: 3px;
         }
       }
     }
@@ -123,7 +119,7 @@ main {
   // 검색 결과
   #performance_search_results {
     width: 100%;
-    margin: 20px 0 20px;
+    margin: 30px 0;
 
     display: flex;
     flex-direction: column;
@@ -135,11 +131,11 @@ main {
 
       display: flex;
       flex-wrap: wrap;
-      gap: 20px 50px;
+      gap: 30px 50px;
 
       #backgroundGradient {
         width: 1200px;
-        height: 672px;
+        height: 682px;
         position: absolute;
         z-index: 10;
         background-image: linear-gradient(transparent 70%, $bg_main 100%);
@@ -199,11 +195,11 @@ main {
 
       display: flex;
       flex-wrap: wrap;
-      gap: 20px 50px;
+      gap: 30px 50px;
 
       #no_results_div {
         width: 100%;
-        height: calc(100vh - 237px);
+        height: calc(100vh - 346px);
 
         display: flex;
         justify-content: center;
@@ -272,7 +268,7 @@ main {
   #more_btn {
     width: 100px;
     height: 30px;
-    margin: 0 auto 20px;
+    margin: 0 auto 30px;
     cursor: pointer;
 
     display: none;
