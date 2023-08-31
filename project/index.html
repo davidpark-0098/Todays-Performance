@@ -7,7 +7,6 @@
 
     <!-- style.css -->
     <link rel="stylesheet" href="./assets/css/style.min.css" />
-    <link rel="stylesheet" href="./assets/css/common.min.css" />
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/4c1758484e.js" crossorigin="anonymous"></script>
     <!-- favicon -->
@@ -36,6 +35,8 @@
   </head>
 
   <body>
+    <!-- popup -->
+    <div data-include="./inc/popup.html"></div>
     <!-- header -->
     <div data-include="./inc/header.html"></div>
 
@@ -73,8 +74,10 @@
     <!-- axios -->
     <script src="../node_modules/axios/dist/axios.min.js"></script>
 
-    <!-- header footer 생성 -->
-    <script src="./assets/js/include.js"></script>
+    <!-- header, footer, popup 생성 -->
+    <script src="./assets/js/inc.js"></script>
+    <!-- popup event -->
+    <script src="./assets/js/popup.js"></script>
 
     <!-- todays- -->
     <script type="module" src="./assets/js/todays-performance.js"></script>
