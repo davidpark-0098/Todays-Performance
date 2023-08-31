@@ -30,6 +30,12 @@ body {
 
   overflow-x: hidden;
 
+  // 스크랩 방지
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
   main {
     flex-grow: 1;
   }

@@ -9,7 +9,6 @@
 // scss import
 @import "./reset.scss";
 @import "./variables.scss";
-@import "./responsive.scss";
 @import "./common.scss";
 @import "./inc.scss";
 
@@ -77,6 +76,11 @@ main {
         width: 100%;
         display: flex;
         justify-content: center;
+
+        // 현재 위치 설정 버튼
+        #location_btn {
+          cursor: pointer;
+        }
 
         // 검색어 입력란
         #input_search_query {
