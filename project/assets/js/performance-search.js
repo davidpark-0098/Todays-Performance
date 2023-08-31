@@ -1,15 +1,38 @@
+// 좌표를 사용하여 현재 지역명 반환
+import coordToAddress from "./coordToAddress.js";
 // 공연 검색
 import performanceSearchResults from "./performance-search-results.js";
 // 로딩 loading("start"), loading("end")
 import loading from "./loading.js";
 
-// 날짜 기본 값을 오늘로 지정
-document.querySelector("#input_date").valueAsDate = new Date();
+// location button 클릭 이벤트
+document.getElementById("location_btn").addEventListener("click", () => {
+  // 좌표를 사용하여 현재 지역명 반환
+  coordToAddress()
+    .then((area) => {
+      // 현재 위치로 지역 옵션 선택
+      document.getElementById("select_map").value = area;
+    })
+    .catch((e) => {
+      console.error(e);
+      alert(e);
+    });
+});
+
+// 날짜 옵션의 기본 값을 오늘로 지정합니다
+document.getElementById("input_date").valueAsDate = new Date();
 
 // 변수 선언
-let selectedDate, selectedGenre, selectedMap, searchedQuery, currentPage, maxPageCount, totalMatchedPerformance, totalMatchedPerformanceLimit, searchedType;
-// node를 포함할 배열 초기화
-let fragment = [];
+let selectedDate,
+  selectedGenre,
+  selectedMap,
+  searchedQuery,
+  currentPage,
+  maxPageCount,
+  totalMatchedPerformance,
+  totalMatchedPerformanceLimit,
+  searchedType,
+  fragment;
 
 /**
  * 공연 검색 결과인 fragment를 performanceSection태그에 append합니다
@@ -72,6 +95,8 @@ document.getElementById("search_form").addEventListener("submit", (e) => {
   totalMatchedPerformanceLimit = 10;
   // 검색된 타입이 Submit일 경우
   searchedType = "submit";
+  // node를 포함할 배열 초기화
+  fragment = [];
 
   // 장르 및 지역 선택 확인
   if (selectedGenre === null || selectedGenre === undefined) {

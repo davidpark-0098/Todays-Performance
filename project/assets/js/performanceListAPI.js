@@ -1,16 +1,18 @@
-import KOPIS_PERFORMANCE_LIST_SERVICE_KEY from "./key.js";
+import { KOPIS_PERFORMANCE_LIST_API_SERVICE_KEY } from "./key.js";
 
-const performanceListAPI = async (numOfRows, currentPage) => {
+const performanceListAPI = async (numOfRows = 100, currentPage = 1) => {
   try {
     /**
     // test api json
     const response = await axios.get("http://localhost:3001/response");
-    json = response.data.body.items.item;
+
+    // json data
+    return response.data.body.items.item;
     /*/
     // api json
     const response = await axios.get("http://api.kcisa.kr/openapi/service/rest/meta16/getkopis01", {
       params: {
-        serviceKey: KOPIS_PERFORMANCE_LIST_SERVICE_KEY,
+        serviceKey: KOPIS_PERFORMANCE_LIST_API_SERVICE_KEY,
         numOfRows: numOfRows,
         pageNo: currentPage,
       },

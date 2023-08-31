@@ -1,21 +1,39 @@
-// 공연장 지도 및 마커 표시
+// 좌표를 사용하여 현재 지역명 반환
+import coordToAddress from "./coordToAddress.js";
+// 카카오맵 api 공연장 찾기
 import searchVenueKakaoMap from "./kakao-map-venue-search.js";
 // 로딩 loading("start"), loading("end")
 import loading from "./loading.js";
 
 // search performance 공연 검색 결과에서 선택한 공연장을 파라미터로 전달 받습니다
 const urlParams = new URLSearchParams(window.location.search);
+const area = urlParams?.get("area");
+const venue = urlParams?.get("venue");
 
 // 파라미터가 있을 경우 해당 공연장을 검색합니다
-if (urlParams.get("area") && urlParams.get("venue")) {
+if (area && venue) {
   // 해당 지역을 selecte_map 항목에 설정합니다
-  document.getElementById("select_map").value = urlParams.get("area");
+  document.getElementById("select_map").value = area;
   // 선택한 공연장 이름을 input에 설정합니다
-  document.getElementById("input_search_query").value = urlParams.get("venue");
+  document.getElementById("input_search_query").value = venue;
 
   // 장소 검색
-  searchVenueKakaoMap(urlParams.get("area"), urlParams.get("venue"), "urlParams");
+  searchVenueKakaoMap(area, venue, "urlParams");
 }
+
+// location button 클릭 이벤트
+document.getElementById("location_btn").addEventListener("click", () => {
+  // 좌표를 사용하여 현재 지역명 반환
+  coordToAddress()
+    .then((area) => {
+      // 현재 위치로 지역 옵션 선택
+      document.getElementById("select_map").value = area;
+    })
+    .catch((e) => {
+      console.error(e);
+      alert(e);
+    });
+});
 
 /**
  * form의 submit 이벤트 발생 시, 선택한 각각의 옵션 값을 변수에 할당합니다.
