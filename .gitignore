@@ -10,7 +10,6 @@
 # Icon must end with two \r
 Icon
 
-
 # Thumbnails
 ._*
 
@@ -211,3 +210,4 @@ sketch
 # My gitignore
 temp/
 json-server/
+key.js
