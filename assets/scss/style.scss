@@ -1,21 +1,12 @@
-/**
- * @ File Name: style.scss
- * @ Author: 박다윗 (daxxx2030@gail.com)
- * @ Last Update: 2022-10-10 17:05:00
- * @ Description: index Style CSS
- */
 @charset "utf-8";
 
-// scss import
 @import "./reset.scss";
 @import "./common.scss";
 @import "./inc.scss";
-
 // Hover Library
 // @import url("../../node_modules/hover.css/css/hover-min.css");
 
-// index.html
-// header와 footer 사이 main
+// index.html main
 main {
   width: 100%;
   text-align: center;

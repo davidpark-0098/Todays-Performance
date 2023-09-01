@@ -23,7 +23,6 @@
 
   #popup_content {
     width: 100%;
-    min-height: 200px;
     max-width: 400px;
 
     border-radius: 5px;
@@ -58,14 +57,15 @@
     // 내용
     p {
       margin: 20px 0;
-      line-height: 25px;
+      line-height: 26px;
+      text-align: center;
     }
 
     // 오늘 하루 보지 않기 버튼
     #today_close_popup {
-      border: none;
       cursor: pointer;
       color: $fc_sub;
+      border: none;
       background-color: transparent;
 
       display: flex;
@@ -127,14 +127,13 @@ header {
 
       // 바로가기 가로 정렬
       ul {
-        width: fit-content;
+        width: inherit;
         height: inherit;
 
         display: flex;
-        align-items: center;
         flex-wrap: wrap;
+        justify-content: flex-end;
 
-        // 요소가 화면 밖으로 넘치면 숨깁니다
         overflow: hidden;
 
         // 바로가기 리스트
@@ -142,7 +141,6 @@ header {
           width: fit-content;
           height: inherit;
 
-          // 형태, 간격, 트렌지션 설정
           line-height: 50px;
           margin-left: 30px;
           box-sizing: border-box;
@@ -151,7 +149,7 @@ header {
           // text
           a {
             display: inline-block;
-            height: 50px;
+            height: inherit;
 
             font-size: $h5;
             font-weight: $fw_m;
@@ -183,14 +181,24 @@ footer {
   display: flex;
   justify-content: space-evenly;
 
+  white-space: nowrap;
+
   // copyright
   address {
     font-size: 10px;
     line-height: 25px;
+
+    margin: 0 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   // icons8
   p {
+    margin: 0 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
     a {
       font-size: 10px;
       line-height: 25px;

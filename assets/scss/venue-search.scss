@@ -1,21 +1,12 @@
-/**
- * @ File Name: common.scss
- * @ Author: 박다윗 (daxxx2030@gail.com)
- * @ Last Update: 2022-10-10 17:05:00
- * @ Description: 공통 적용 CSS
- */
 @charset "utf-8";
 
-// scss import
 @import "./reset.scss";
 @import "./variables.scss";
 @import "./common.scss";
 @import "./inc.scss";
-
 // Hover Library
 // @import url("../../node_modules/hover.css/css/hover-min.css");
 
-// 공연 상세 검색, 지도, 검색 결과
 main {
   width: 100%;
 
