@@ -85,10 +85,13 @@ header {
   border-bottom: 1px solid $line;
 
   #header_section {
+    width: 100%;
     max-width: 800px;
     height: 100%;
+
     margin: 0 auto;
     padding: 0 20px;
+    box-sizing: border-box;
 
     display: flex;
     align-items: center;
@@ -118,12 +121,27 @@ header {
 
     // shortcut
     #shortcut_nav {
+      width: 100%;
+      max-width: fit-content;
+      height: 50px;
+
+      // 바로가기 가로 정렬
       ul {
-        // 바로가기 가로 정렬
+        width: fit-content;
+        height: inherit;
+
         display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        // 요소가 화면 밖으로 넘치면 숨깁니다
+        overflow: hidden;
 
         // 바로가기 리스트
         li {
+          width: fit-content;
+          height: inherit;
+
           // 형태, 간격, 트렌지션 설정
           line-height: 50px;
           margin-left: 30px;
