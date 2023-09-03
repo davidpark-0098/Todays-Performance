@@ -141,7 +141,7 @@ async function performanceSearchResults(
     // a태그 생성과 공연장 작성
     const venueA = document.createElement("a");
     venueA.className = "venueA";
-    venueA.href = `http://127.0.0.1:5500/venue-search.html?area=${selectedMap}&venue=${mp.spatialCoverage}`;
+    venueA.href = `/venue-search.html?area=${selectedMap}&venue=${mp.spatialCoverage}`;
     venueA.target = "_blank";
     venueA.rel = "noreferrer";
     venueA.innerHTML = mp.spatialCoverage;
