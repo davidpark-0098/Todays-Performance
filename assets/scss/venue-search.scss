@@ -1,19 +1,16 @@
 @charset "utf-8";
 
 @import "./reset.scss";
+@import "./responsive.scss";
 @import "./variables.scss";
 @import "./common.scss";
 @import "./inc.scss";
-// Hover Library
-// @import url("../../node_modules/hover.css/css/hover-min.css");
 
 main {
   width: 100%;
 
   #searchDiv {
     width: 100%;
-    padding: 20px 0;
-    border-bottom: 1px solid $line;
 
     display: flex;
     flex-direction: column;
@@ -21,39 +18,41 @@ main {
     align-items: center;
 
     background-color: white;
+    border-bottom: 1px solid $border_color_main;
+    padding: 2rem;
+    box-sizing: border-box;
 
     nav {
       width: 100%;
+
       display: flex;
       flex-direction: column;
       align-items: center;
 
       #search_title {
-        font-weight: $fw_b;
-        line-height: $h1;
-        color: $fc_main;
+        color: $font_color_main;
       }
 
-      a {
-        font-size: 14px;
-        font-weight: $fw_b;
-        color: $fc_sub;
-
-        opacity: 0.5;
-        transition: 0.3s all;
+      #performance_search_shortcut {
+        font-size: $font_size_s;
+        font-weight: $font_weight_500;
+        color: $font_color_sub;
+        margin: 0.5rem 0 1rem;
 
         display: flex;
         align-items: center;
-        margin: 7px 0 18px;
+
+        opacity: 0.5;
+        transition: all 0.3s ease;
 
         &:hover {
-          color: $fc_main;
+          color: $font_color_main;
           opacity: 1;
         }
 
         i {
-          font-size: 10px;
-          margin-left: 3px;
+          font-size: $font_size_xxxs;
+          margin-left: 0.3rem;
         }
       }
     }
@@ -62,27 +61,55 @@ main {
     #search_form {
       width: 100%;
 
+      display: flex;
+      justify-content: center;
+
       .search_fieldset {
         width: 100%;
+        min-width: 40rem;
+        max-width: 50rem;
+
         display: flex;
         justify-content: center;
 
+        #select_map {
+          flex-grow: 1;
+        }
+
         // 현재 위치 설정 버튼
         #location_btn {
+          width: 30px;
           cursor: pointer;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          #location_icon {
+            display: block;
+            width: 30px;
+            font-size: 1.4rem;
+          }
         }
 
         // 검색어 입력란
         #input_search_query {
-          width: 200px;
+          flex-grow: 2;
         }
 
         // 검색 버튼
         #submit_btn {
+          width: 30px;
           cursor: pointer;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
           #search_icon {
             display: none;
+            width: 30px;
+            font-size: 1.3rem;
 
             &.active {
               display: block;
@@ -91,9 +118,10 @@ main {
 
           // loading
           #loading_icon_on_submit_btn {
-            width: 14px;
-            height: 14px;
+            width: 1.4rem;
+            height: 1.4rem;
             display: none;
+
             background: url(../img/loading-icon.gif) no-repeat center/cover;
 
             z-index: 1000;
@@ -110,9 +138,10 @@ main {
   // 카카오맵 지도
   #map {
     width: 100%;
-    height: calc(100vh - 226px);
+    height: calc(100vh - 21.1rem);
     position: relative;
 
+    // 마커의 인포윈도우 스타일
     div {
       div {
         // 인포윈도우 선택
@@ -137,8 +166,6 @@ main {
         }
       }
     }
-
-    // 마커의 인포윈도우 스타일
     .markerDiv {
       width: 100px;
       height: 100%;
@@ -148,10 +175,10 @@ main {
       .markerLink {
         display: block;
         text-align: center;
-        padding: 5px;
+        padding: 0.5rem;
 
         .markerTitle {
-          font-size: 12px;
+          font-size: $font_size_xxs;
         }
       }
     }
@@ -173,11 +200,28 @@ main {
         justify-content: center;
         align-items: center;
 
-        font-size: 16px;
-        font-weight: $fw_b;
-        color: $fc_main;
+        font-size: $font_size_s;
+        color: $font_color_main;
         opacity: 0.3;
       }
+    }
+  }
+}
+
+@include tablet {
+  main {
+    // 카카오맵 지도
+    #map {
+      height: calc(100vh - 192.2px);
+    }
+  }
+}
+
+@include mobile {
+  main {
+    // 카카오맵 지도
+    #map {
+      height: calc(100vh - 173px);
     }
   }
 }

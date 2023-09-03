@@ -1,75 +1,62 @@
 @charset "utf-8";
+@import "./responsive.scss";
 
-// h1 ~ h5 반응형 폰트 사이즈
-// desktop first
-$h1: 28px;
-$h2: 24px;
-$h3: 20px;
-$h4: 18px;
-$h5: 16px;
-
-// tablet
-$h1_t: 28px;
-$h2_t: 24px;
-$h3_t: 20px;
-$h4_t: 18px;
-$h5_t: 16px;
-
-// mobile
-$h1_m: 24px;
-$h2_m: 22px;
-$h3_m: 20px;
-$h4_m: 18px;
-$h5_m: 16px;
-
-// 텍스트 폰트 사이즈
-$fs_xxl: 32px;
-$fs_xl: 24px;
-$fs_l: 14px;
-$fs_m: 13px;
-$fs_s: 12px;
-$fs_xs: 10px;
-$fs_xxs: 9px;
-
-// chrome의 최소 폰트 크기는 10px이다.
-
+// chrome browser 최소 폰트 크기 10px
+// 타이틀 18pt ~ 32pt
 // 본문 16pt ~ 18pt
 // 캡션 10pt ~ 12pt
-// 타이틀 18pt ~ 32pt 이며,
-// 10pt 이하의 폰트 크기는 사용하지 않는 것이 좋다.
 
-// xx-small = 9px = 0.5625em
-// x-small =  10px = 0.625em
-// small = 13px = 0.812em
-// medium = 16px =12pt = 1em
-// large = 18px = 1.125em
-// x-large = 24px = 1.5em
-// xx-large = 32px = 2em
+// html font size
+@include desktop {
+  :root {
+    font-size: 10px; // 10px === 1rem
+  }
+}
+@include tablet {
+  :root {
+    font-size: 9px;
+  }
+}
+@include mobile {
+  :root {
+    font-size: 8px;
+  }
+}
 
-// 폰트 두께
-$fw_thin: 100;
-$fw_light: 300;
-$fw_r: 400;
-$fw_m: 500;
-$fw_b: 700;
-$fw_black: 900;
+// font size
+$font_size_xxxl: 3.2rem;
+$font_size_xxl: 2.8rem;
+$font_size_xl: 2.4rem;
+$font_size_l: 2rem;
+$font_size_m: 1.8rem;
+$font_size_s: 1.6rem;
+$font_size_xs: 1.4rem;
+$font_size_xxs: 1.2rem;
+$font_size_xxxs: 1rem;
+
+// font weight
+$font_weight_100: 100;
+$font_weight_200: 200;
+$font_weight_300: 300;
+$font_weight_400: 400;
+$font_weight_500: 500;
+$font_weight_600: 600;
+$font_weight_700: 700;
+$font_weight_800: 800;
+$font_weight_900: 900;
 
 // background color
-$bg_main: #fafafa;
-$bg_sub: #f1f3f5;
-$bg_footer: #2a3037;
+$background_color_main: #fafafa;
+$background_color_sub: #f1f3f5;
+$background_color_footer: #2a3037;
 
 // font color
-$fc_main: #2a3037;
-$fc_sub: #868e96;
+$font_color_main: #2a3037;
+$font_color_sub: #868e96;
 
-// brand color
-$pc_main: #566fee;
-$pc_main_hover: #425ad5;
+// font point color
+$font_point_color_main: #566fee;
+$font_point_color_sub: #425ad5;
 
-// header logo, nav color
-$mc: #f1f3f5;
-$mc_hover: #e5eaff;
-
-// line color
-$line: #dee2e6;
+// border color
+$border_color_main: #dee2e6;
