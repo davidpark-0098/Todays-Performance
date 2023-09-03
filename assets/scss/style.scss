@@ -63,6 +63,7 @@ main {
 
     #sub_title {
       font-size: $font_size_s;
+      font-weight: $font_weight_500;
       color: $font_color_sub;
       line-height: 2rem;
     }
@@ -137,6 +138,7 @@ main {
           height: 100%;
 
           font-size: $font_size_s;
+          font-weight: $font_weight_500;
           line-height: 5rem;
           color: white;
         }
@@ -159,6 +161,7 @@ main {
           height: 100%;
 
           font-size: $font_size_s;
+          font-weight: $font_weight_500;
           line-height: 5rem;
           color: $font_color_sub;
 
