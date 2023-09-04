@@ -10,12 +10,15 @@
 main {
   width: 100%;
   text-align: center;
-  margin: 2rem 0;
+
+  // 상, 하 여백 반응형
+  padding: calc(5rem - 1.2vh) 0;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   overflow: hidden;
 
   // 타이틀
@@ -176,7 +179,7 @@ main {
   }
 }
 
-// 태블릿, 모바일 반응형
+// 반응형
 @include tablet-mobile {
   main {
     // 오늘의 공연 포스터
