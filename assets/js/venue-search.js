@@ -1,5 +1,5 @@
 // 좌표를 사용하여 현재 지역명 반환
-import coordToAddress from "./coordToAddress.js";
+import coordToAddress from "./coord-to-address.js";
 // 카카오맵 api 공연장 찾기
 import searchVenueKakaoMap from "./kakao-map-venue-search.js";
 // 로딩 loading("start"), loading("end")
