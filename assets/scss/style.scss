@@ -73,7 +73,7 @@ main {
   }
 
   // 오늘의 공연 포스터
-  #todays_performance {
+  #performance_today {
     display: flex;
     margin: 1.8rem 2rem 2rem 2rem;
 
@@ -183,7 +183,7 @@ main {
 @include tablet-mobile {
   main {
     // 오늘의 공연 포스터
-    #todays_performance {
+    #performance_today {
       max-width: 800px;
       max-height: 750px;
       margin: 1rem 1.2rem 1.2rem 1.2rem;

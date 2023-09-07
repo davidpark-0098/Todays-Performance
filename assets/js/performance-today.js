@@ -1,15 +1,15 @@
 // KOPIS Performance List API
 // performanceListAPI(numOfRows, currentPage)
-import performanceListAPI from "./performanceListAPI.js";
+import performanceListAPI from "./performance-list-api.js";
 
 if (localStorage.getItem("performance") !== null) {
-  todaysPerformance(JSON.parse(localStorage.getItem("performance")));
+  performanceToday(JSON.parse(localStorage.getItem("performance")));
 } else {
   // 공연 데이터를 가져옵니다
   performanceListAPI(14, 1)
     .then((json) => {
       let performanceArray = json.slice(0, 14);
-      todaysPerformance(performanceArray);
+      performanceToday(performanceArray);
       localStorage.setItem("performance", JSON.stringify(performanceArray));
     })
     .catch((e) => {
@@ -22,7 +22,7 @@ if (localStorage.getItem("performance") !== null) {
  * 메인 페이지에 공연 포스터와 url을 생성합니다
  * @param {Array} performanceArray : 공연 정보를 담은 배열
  */
-function todaysPerformance(performanceArray) {
+function performanceToday(performanceArray) {
   performanceArray.forEach((performance) => {
     // article태그 생성과 클래스 이름 적용
     const article = document.createElement("article");
@@ -39,9 +39,9 @@ function todaysPerformance(performanceArray) {
     a.target = "_blank";
     a.rel = "noreferrer";
 
-    // #todays_performance > article > a > img
+    // #performance_today > article > a > img
     a.appendChild(img);
     article.appendChild(a);
-    document.querySelector("#todays_performance").appendChild(article);
+    document.querySelector("#performance_today").appendChild(article);
   });
 }

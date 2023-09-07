@@ -1,5 +1,5 @@
 // 좌표를 사용하여 현재 지역명 반환
-import coordToAddress from "./coordToAddress.js";
+import coordToAddress from "./coord-to-address.js";
 // 공연 검색
 import performanceSearchResults from "./performance-search-results.js";
 // 로딩 loading("start"), loading("end")

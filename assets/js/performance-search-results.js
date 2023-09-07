@@ -1,5 +1,5 @@
 // KOPIS Performance List API
-import performanceListAPI from "./performanceListAPI.js";
+import performanceListAPI from "./performance-list-api.js";
 
 /* "title": "장윤정 라이브 콘서트 [성남]",
 "creator": "누리집",
